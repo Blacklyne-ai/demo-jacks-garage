@@ -1,0 +1,185 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import StatsCounter from '../components/StatsCounter.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { Phone, ArrowRight, ArrowUpRight, Quote } from '@lucide/astro';
+import { site, externalPress } from '../data/site';
+
+const timeline = [
+  { year: '1980', title: 'AZIZA, the £1000 Bay window', text: 'A VW T2 Bay window bought on a Southend beach carries the family to Tripoli and back - and sparks a lifelong love of Volkswagens.' },
+  { year: "early '90s", title: 'Jack\'s Garage is founded', text: 'Established in Ladbroke Grove by a Kiwi gent called Grant.' },
+  { year: '1995', title: 'Trading as VW specialists', text: 'The workshop has been servicing all varieties of VW ever since.' },
+  { year: '2007', title: 'A new chapter', text: 'Joseph buys the business from Grant, keeping on as many of the team as possible - including Vaidas, now general manager.' },
+  { year: '2017', title: 'Standing with our community', text: 'The first-decade celebration is cancelled out of respect for those lost in the Grenfell Tower tragedy nearby.' },
+  { year: '2019', title: 'Pugsley goes electric', text: 'Our first Beetle EV conversion leads to a partnership with eClassics in Stuttgart.' },
+  { year: '2020', title: 'In the motoring press', text: 'Six magazines feature our pioneering classic-VW EV conversions in a single spring.' },
+  { year: '2026', title: '30+ years and counting', text: 'Still a family business, still in W10, still in love with Volkswagens.' },
+];
+
+const team = [
+  { name: 'Joseph', role: 'Owner', text: 'Bought Jack\'s Garage in 2007 and led its pioneering move into classic-VW EV conversions - now one of the UK\'s leading experts in the field.', image: '/images/jg/about-story.jpg' },
+  { name: 'Vaidas', role: 'General Manager', text: '"Like the Midas touch" - Vaidas has been with the workshop since before 2007 and has his own unique touch with all Volkswagens alike.', image: '/images/workshop/ws-19.jpg' },
+];
+---
+<Layout
+  title="About Jack's Garage - Classic VW Specialists in Ladbroke Grove, London Since 1995"
+  description="The story of Jack's Garage - a family-run Classic VW specialist in Ladbroke Grove W10 since 1995, and the UK distributor of eClassics EV conversion kits. Call 020 7243 8926."
+  path="/about-us"
+  image="/images/jg/about-story.jpg"
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-white pt-32 md:pt-40">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-60 [background-size:46px_46px]"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-[30rem] w-[30rem] rounded-full bg-brand-500/10 blur-3xl"></div>
+    <div class="container-jg relative grid items-center gap-12 pb-16 md:pb-24 lg:grid-cols-2">
+      <div>
+        <nav aria-label="Breadcrumb" class="reveal mb-6 flex items-center gap-2 text-sm text-muted">
+          <a href="/" class="transition-colors hover:text-brand-700">Home</a><span class="text-line">/</span><span class="text-ink">About Us</span>
+        </nav>
+        <span class="eyebrow reveal">Family business since 1995</span>
+        <h1 class="reveal mt-4 text-d2 text-ink" style="--reveal-delay:60ms">We love VWs, and <span class="script-accent text-brand-600">we always have</span></h1>
+        <p class="reveal mt-6 text-body-xl leading-relaxed text-ink-700" style="--reveal-delay:120ms">
+          We are a well-established family business and we've been operating in Ladbroke Grove W10, since 1995. Our success is down to the highly skilled team of VW experts who man the workshops and the fact that we love VWs and will bend over backwards to help our customers.
+        </p>
+        <div class="reveal mt-8 flex flex-wrap gap-3" style="--reveal-delay:180ms">
+          <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+          <a href="/services/electric-vehicle-conversions" class="btn btn-outline btn-lg">Our EV Conversions <ArrowRight size={16} class="arrow" /></a>
+        </div>
+      </div>
+      <div class="reveal relative" style="--reveal-delay:140ms">
+        <div aria-hidden="true" class="absolute -inset-3 -z-10 rounded-[2.25rem] bg-orange-grad opacity-15 blur-2xl"></div>
+        <img src="/images/jg/about-story.jpg" alt="The Jack's Garage team in the Ladbroke Grove workshop with a classic VW Bus" width="1100" height="825" loading="eager" class="aspect-[4/3] w-full rounded-3xl border border-line object-cover shadow-glass-lg" />
+      </div>
+    </div>
+  </section>
+
+  <!-- The story, in the founder's words -->
+  <section class="section">
+    <div class="container-jg">
+      <div class="mx-auto max-w-3xl">
+        <SectionHeading align="left" eyebrow="Our story" title="It all started when I was only 6 months old" class="max-w-2xl" />
+        <div class="prose-jg mt-8 space-y-5">
+          <p class="first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:font-serif first-letter:text-6xl first-letter:font-normal first-letter:leading-[0.8] first-letter:text-brand-600">
+            My father was at the time a surgeon in the main hospital in Southend on Sea when he got a job as a surgeon in Tripoli, Libya (then the Jewel of North Africa). We are Coptic Egyptians so dad grew up in Egypt and Arabic was his native tongue, the same language used in Libya. Even on a consultant surgeon's salary in the early 80s, it was impossible for us to afford to fly our whole family with our worldly possessions to North Africa.
+          </p>
+          <p>
+            One day, on a walk down the beach in Southend, shortly after I was born, Dad found a Volkswagen T2 Bay window for sale! It was literally an answer to his prayers. He bought it for £1000 in 1980. Then he kitted it out with a custom made full-length roof rack and carried out all the necessary mechanical repairs to make the voyage to North Africa a reality. Dad then drove Mum, my gran, my sister and myself all the way to Tripoli and back to Southend several times, with all our worldly possessions strapped to the roof rack, via a car ferry from Genoa in Italy to Tunis. From Tunis, the capital of Tunisia, we drove south and then east onto Tripoli the capital of Libya.
+          </p>
+        </div>
+
+        <figure class="my-10 rounded-3xl border border-line bg-cream-200 p-8 md:p-10">
+          <Quote size={30} class="text-brand-300" />
+          <blockquote class="mt-3 font-serif text-2xl italic leading-snug text-ink md:text-[1.7rem]">
+            This was the beginning of my lifelong love affair with Volkswagens - specifically my father's Volkswagen, a Type 2 Campervan called "AZIZA". Aziza in Arabic means dearest one, or most beloved.
+          </blockquote>
+        </figure>
+
+        <div class="prose-jg space-y-5">
+          <p>
+            This love eventually led me to Jack's Garage in 2007. My older sister inherited our parents' love of medicine and is now a consultant paediatrician, like our mother.
+          </p>
+          <p>
+            Jack's Garage was established in the early '90s by a Kiwi gent called Grant. He and his wife decided to move back to New Zealand as their children were growing fast and they both felt New Zealand was by far a better place to be for their children's future. And so in June of 2007, I purchased the business from Grant the Kiwi. I kept on as many staff as possible, one of whom is now the general manager of the entire operation, Vaidas, like "the Midas touch" - Vaidas has his own unique touch with all Volkswagens alike.
+          </p>
+          <p>
+            Fast forward 10 years - while we were preparing a celebration for our first decade as a team, in June 2017 we had to cancel the festivities, out of respect for those who sadly perished in the Grenfell Tower fire tragedy. The Times wrote an article about us: how we, as a small business with such proximity to the Tower, were affected by the profound and unexpected fallout.
+          </p>
+          <p>
+            Electric vehicles, and the conversion of classic Volkswagens into EVs - thus future-proofing these iconic vehicles - has been a passion of mine for some time. And so in early 2019 we finally managed to convert my first Beetle, Pugsley, into an electric vehicle. This led me to eClassics in Stuttgart, Germany, which has been commissioned by Volkswagen themselves to build an EV conversion kit, utilising Volkswagen's very latest EV components, direct from Volkswagen Group Components. After establishing a relationship with the wonderful people at eClassics Germany, we are now very proud and honoured to be the UK distributors of their EV conversion kits for Classic VWs. Sky News very kindly wrote an article about this newly formed relationship.
+          </p>
+          <p>
+            If you'd like any information about the services that we offer, give us a call on
+            <a href={site.phone.href} class="font-semibold">020 7243 8926</a> or <a href="/contact-us">contact us here</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Heritage timeline -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading eyebrow="Three decades" title="The Jack's Garage story" intro="From a £1000 Bay window on a Southend beach to one of the UK's leading classic-VW EV converters." />
+      <ol class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {timeline.map((t, i) => (
+          <li class="reveal relative rounded-3xl border border-line bg-white p-6 shadow-card" style={`--reveal-delay:${(i % 4) * 80}ms`}>
+            <span class="font-mono text-2xl font-semibold text-brand-600">{t.year}</span>
+            <h3 class="mt-2 text-h3 font-bold text-ink">{t.title}</h3>
+            <p class="mt-2 text-[0.9rem] leading-relaxed text-muted">{t.text}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <!-- Team -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading eyebrow="The team" title="The people who love your VW" intro="A highly skilled team of VW experts man the workshops - here are two of the names you'll come to know." />
+      <div class="mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-2">
+        {team.map((m, i) => (
+          <article class="service-card reveal" style={`--reveal-delay:${i * 90}ms`}>
+            <div class="relative aspect-[5/4] overflow-hidden">
+              <img src={m.image} alt={`${m.name}, ${m.role} at Jack's Garage`} width="700" height="560" loading="lazy" class="service-card__img h-full w-full object-cover" />
+              <div class="absolute inset-0 bg-gradient-to-t from-ink-950/70 to-transparent"></div>
+              <div class="absolute inset-x-5 bottom-4">
+                <h3 class="text-h2 font-bold text-white">{m.name}</h3>
+                <p class="font-mono text-xs uppercase tracking-wide text-gold-300">{m.role}</p>
+              </div>
+            </div>
+            <p class="flex-1 p-6 text-[0.95rem] leading-relaxed text-muted">{m.text}</p>
+          </article>
+        ))}
+      </div>
+      <p class="reveal mx-auto mt-6 max-w-2xl text-center text-sm text-muted">The full workshop team brings decades of combined VW experience. Pop in and say hello.</p>
+    </div>
+  </section>
+
+  <!-- eClassics / EV innovation -->
+  <section class="section pt-0">
+    <div class="container-jg">
+      <div class="relative overflow-hidden rounded-4xl bg-mesh-ink p-8 text-white shadow-glass-lg md:p-12">
+        <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-[0.06] [background-size:40px_40px]"></div>
+        <div class="relative grid items-center gap-10 lg:grid-cols-[1.3fr_1fr]">
+          <div>
+            <span class="eyebrow eyebrow-on-dark">UK distributor</span>
+            <h2 class="mt-4 text-d3 text-white">Proud partners of <span class="script-accent text-gold-400">eClassics</span>, Stuttgart</h2>
+            <p class="mt-5 text-body-xl text-white/75">
+              eClassics was commissioned by Volkswagen themselves to build an EV conversion kit using Volkswagen's very latest EV components - direct from Volkswagen Group Components. We're proud and honoured to be the UK distributors of their EV conversion kits for Classic VWs.
+            </p>
+            <a href="/services/electric-vehicle-conversions" class="btn btn-primary btn-lg mt-8">Explore EV Conversions <ArrowRight size={18} class="arrow" /></a>
+          </div>
+          <div class="grid gap-4">
+            <img src="/images/ev/ev-01.jpg" alt="The eClassics eBasis electric base-chassis for classic Volkswagens" width="700" height="450" loading="lazy" class="w-full rounded-2xl border border-white/10 object-cover" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- External press -->
+  <section class="section pt-0">
+    <div class="container-jg">
+      <SectionHeading align="left" eyebrow="More coverage" title="Read about our electric progress" class="max-w-2xl" />
+      <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {externalPress.map((a) => (
+          <a href={a.href} target="_blank" rel="noopener" class="group flex items-start justify-between gap-4 rounded-2xl border border-line bg-white p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card-hover">
+            <span class="min-w-0">
+              <span class="block font-mono text-xs font-semibold uppercase tracking-wide text-brand-700">{a.source}</span>
+              <span class="mt-1.5 block text-[0.95rem] font-semibold leading-snug text-ink">{a.title}</span>
+            </span>
+            <ArrowUpRight size={18} class="mt-0.5 shrink-0 text-muted transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-brand-600" />
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section pt-0">
+    <div class="container-jg"><StatsCounter /></div>
+  </section>
+
+  <CtaBand title="Come and meet the team" subtitle="Three decades of VW knowledge, a workshop full of classics, and a warm welcome. Call us or pop in to Ladbroke Grove." />
+</Layout>

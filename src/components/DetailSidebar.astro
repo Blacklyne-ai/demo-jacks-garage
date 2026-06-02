@@ -1,0 +1,55 @@
+---
+import { Phone, ArrowRight, ArrowUpRight, MapPin, Navigation } from '@lucide/astro';
+import Icon from './Icon.astro';
+import { site, mapsLink } from '../data/site';
+
+const enquiryLinks = [
+  { title: 'EV Conversion Enquiry', href: site.enquiries.ev, icon: 'Zap' },
+  { title: 'Bodywork Enquiry', href: site.enquiries.bodywork, icon: 'Hammer' },
+  { title: 'Service Enquiry', href: site.enquiries.service, icon: 'Wrench' },
+];
+---
+<aside class="flex flex-col gap-5 lg:sticky lg:top-28">
+  <!-- Call card -->
+  <div class="relative overflow-hidden rounded-3xl bg-mesh-ink p-7 text-white shadow-glass-lg">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-[0.06] [background-size:36px_36px]"></div>
+    <div class="relative">
+      <p class="text-sm font-semibold text-gold-300">Speak to the team</p>
+      <a href={site.phone.href} class="mt-1 block font-mono text-2xl font-semibold tracking-tight text-white transition-colors hover:text-brand-300">{site.phone.display}</a>
+      <p class="mt-2 text-sm text-white/60">Mon-Fri 8am-6pm · Ladbroke Grove W10</p>
+      <div class="mt-5 flex flex-col gap-2.5">
+        <a href={site.phone.href} class="btn btn-primary w-full"><Phone size={17} /> Call now</a>
+        <a href="/contact-us" class="btn btn-ghost-light w-full">Get a Quote <ArrowRight size={16} class="arrow" /></a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Enquiry shortcuts -->
+  <div class="rounded-3xl border border-line bg-white p-5 shadow-card">
+    <p class="px-1 text-xs font-semibold uppercase tracking-[0.14em] text-muted">Quick enquiries</p>
+    <div class="mt-3 flex flex-col gap-1">
+      {enquiryLinks.map((l) => (
+        <a href={l.href} class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors hover:bg-brand-50">
+          <span class="icon-tile h-9 w-9 rounded-xl"><Icon name={l.icon} size={17} /></span>
+          <span class="flex-1 text-[0.9rem] font-semibold text-ink">{l.title}</span>
+          <ArrowRight size={16} class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600" />
+        </a>
+      ))}
+      <a href={site.motCheckUrl} target="_blank" rel="noopener" class="group flex items-center gap-3 rounded-2xl px-3 py-2.5 transition-colors hover:bg-brand-50">
+        <span class="icon-tile h-9 w-9 rounded-xl"><Icon name="ShieldCheck" size={17} /></span>
+        <span class="flex-1 text-[0.9rem] font-semibold text-ink">Check MOT</span>
+        <ArrowUpRight size={16} class="text-muted transition-transform group-hover:-translate-y-0.5 group-hover:text-brand-600" />
+      </a>
+    </div>
+  </div>
+
+  <!-- Location mini -->
+  <a href={mapsLink} target="_blank" rel="noopener" class="group flex items-start gap-3 rounded-3xl border border-line bg-cream-200 p-5 transition-colors hover:border-brand-300">
+    <span class="icon-tile h-10 w-10"><MapPin size={19} /></span>
+    <span class="min-w-0">
+      <span class="block text-[0.9rem] font-semibold text-ink">{site.address.line1}</span>
+      <span class="block text-sm text-muted">{site.address.city} {site.address.postcode}</span>
+      <span class="mt-1.5 inline-flex items-center gap-1 text-sm font-semibold text-brand-700">Get directions <Navigation size={13} /></span>
+    </span>
+  </a>
+</aside>

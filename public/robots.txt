@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://demo-jacks-garage.pages.dev/sitemap-index.xml

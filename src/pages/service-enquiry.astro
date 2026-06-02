@@ -1,0 +1,138 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import OpeningHours from '../components/OpeningHours.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import FacebookIcon from '../components/FacebookIcon.astro';
+import { Phone, Wrench, ArrowRight, ArrowUpRight } from '@lucide/astro';
+import { site } from '../data/site';
+
+const fields = [
+  { name: 'name', label: 'Name', type: 'text', required: true },
+  { name: 'email', label: 'Email', type: 'email', required: true },
+  { name: 'phone', label: 'Telephone', type: 'tel', required: true },
+  { name: 'model', label: 'VW Model', type: 'text', required: true, placeholder: 'e.g. VW Beetle' },
+  { name: 'year', label: 'Year', type: 'text' },
+  { name: 'service', label: 'Service Type', type: 'select', required: true, options: ['Oil Service', 'Engine Service', 'Full Service', 'MOT', 'Tyres', 'Brakes', 'Other'] },
+  { name: 'date', label: 'Preferred Date', type: 'date' },
+  { name: 'message', label: 'Anything else?', type: 'textarea', full: true, placeholder: 'Service history, any noises, warning lights or specific concerns…' },
+] as const;
+
+// Three service levels — verbatim ordering from the source-site servicing pages.
+const levels = [
+  {
+    name: 'Oil Service',
+    icon: 'Disc',
+    text: 'Oil and filter change with a multi-point safety check. The annual essential to keep your VW running sweetly between bigger services.',
+  },
+  {
+    name: 'Engine Service',
+    icon: 'Cog',
+    text: 'Everything in the Oil Service plus air filter, fuel filter and spark plugs - the mid-level service for higher-mileage or older VWs.',
+  },
+  {
+    name: 'Full Service',
+    icon: 'Settings',
+    text: 'Our most thorough service. A complete inspection and the full schedule of replacements for total peace of mind, year-round.',
+  },
+];
+
+const reassurance = [
+  { icon: 'ShieldCheck', title: 'Warranty-safe servicing', text: 'Servicing your VW with us protects your manufacturer warranty - we have specialised in Volkswagens since 1995.' },
+  { icon: 'BadgeCheck', title: 'Genuine & OE-quality parts', text: 'We fit genuine VW or matched OE-quality parts, from air-cooled classics to the latest ID models.' },
+  { icon: 'HeartHandshake', title: 'Honest, history-led advice', text: "We'll recommend the right service for your VW's age, mileage and service history - never more than you need." },
+];
+---
+<Layout
+  title="Service Enquiry - Jack's Garage | Classic VW Specialists London W10"
+  description="Book your VW in for a service with Jack's Garage in Ladbroke Grove, London W10. Oil, Engine and Full servicing by VW specialists since 1995. Call 020 7243 8926."
+  path="/service-enquiry"
+  image="/images/workshop/ws-11.jpg"
+>
+  <PageHero
+    eyebrow="Service Enquiry"
+    title="Book your VW in for a service"
+    subtitle="Tell us about your Volkswagen and we'll get you booked in. <strong>Warranty-safe servicing</strong> by VW specialists in Ladbroke Grove since 1995 - classic air-cooled to the latest electric."
+    image="/images/workshop/ws-11.jpg"
+    imageAlt="A classic Volkswagen up on the ramp being serviced in the Jack's Garage workshop"
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Service Enquiry' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href="/car-service-prices/vw" class="btn btn-outline btn-lg"><Wrench size={17} /> VW Servicing <ArrowRight size={16} class="arrow" /></a>
+  </PageHero>
+
+  <!-- Form + reassurance -->
+  <section class="section">
+    <div class="container-jg grid items-start gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <!-- LEFT: enquiry form -->
+      <div>
+        <h2 class="reveal text-h2 font-bold text-ink">Send a service enquiry</h2>
+        <p class="reveal mt-2 text-muted" style="--reveal-delay:60ms">Fill in a few details and the workshop will be in touch to confirm a date. Prefer to talk it through? Just give us a call.</p>
+        <div class="reveal mt-6" style="--reveal-delay:120ms">
+          <EnquiryForm formName="service-enquiry" fields={fields} submitLabel="Send enquiry" />
+        </div>
+      </div>
+
+      <!-- RIGHT: reassurance panel -->
+      <div class="flex flex-col gap-5 lg:sticky lg:top-28">
+        <div class="reveal rounded-3xl border border-line bg-cream-200 p-6 md:p-8">
+          <span class="eyebrow">Why Jack's Garage</span>
+          <h3 class="mt-3 text-h2 font-bold text-ink">Servicing by <span class="script-accent text-brand-600">VW specialists</span></h3>
+          <p class="mt-3 text-[0.95rem] leading-relaxed text-muted">We have looked after nothing but Volkswagens since 1995. Whatever your VW and whatever its history, you are in safe, specialist hands.</p>
+          <ul class="mt-6 space-y-5">
+            {reassurance.map((r) => (
+              <li class="flex items-start gap-4">
+                <span class="icon-tile h-11 w-11 shrink-0"><Icon name={r.icon} size={20} /></span>
+                <span class="min-w-0">
+                  <span class="block text-[0.95rem] font-semibold text-ink">{r.title}</span>
+                  <span class="mt-1 block text-sm leading-relaxed text-muted">{r.text}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <OpeningHours />
+
+        <a href={site.facebook} target="_blank" rel="noopener" class="reveal group flex items-center gap-3 rounded-3xl border border-line bg-white p-5 shadow-card transition-colors hover:border-brand-300">
+          <span class="icon-tile h-11 w-11 shrink-0"><FacebookIcon size={20} /></span>
+          <span class="min-w-0 flex-1">
+            <span class="block text-[0.95rem] font-semibold text-ink">Message us on Facebook</span>
+            <span class="block text-sm text-muted">@JacksGarageW10 - we reply between jobs</span>
+          </span>
+          <ArrowUpRight size={18} class="shrink-0 text-brand-600 transition-transform duration-300 group-hover:-translate-y-0.5" />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three service levels -->
+  <section class="section bg-cream-200 pt-0">
+    <div class="container-jg pt-16 md:pt-24">
+      <div class="mx-auto max-w-2xl text-center">
+        <span class="eyebrow reveal">Three service levels</span>
+        <h2 class="reveal mt-4 text-d3 text-ink" style="--reveal-delay:60ms">Oil, Engine or Full - we'll <span class="script-accent text-brand-600">recommend the right one</span></h2>
+        <p class="reveal mt-4 text-body-xl text-muted" style="--reveal-delay:120ms">Not sure which your VW needs? Tell us its age, mileage and service history in the form and we'll guide you to the right one. No upselling - just honest advice.</p>
+      </div>
+      <div class="mt-14 grid gap-5 sm:grid-cols-3">
+        {levels.map((l, i) => (
+          <article class="reveal card flex flex-col p-7" style={`--reveal-delay:${i * 80}ms`}>
+            <span class="icon-tile"><Icon name={l.icon} size={24} /></span>
+            <h3 class="mt-5 text-h3 font-bold text-ink">{l.name}</h3>
+            <p class="mt-2 flex-1 text-[0.95rem] leading-relaxed text-muted">{l.text}</p>
+          </article>
+        ))}
+      </div>
+      <div class="reveal mt-10 text-center">
+        <a href="/car-service-prices/vw" class="btn btn-outline btn-lg">See VW servicing & prices <ArrowRight size={16} class="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Ready to book your VW in?"
+    subtitle="Send the form above or call the workshop for honest advice and a date that suits you. We are open Monday to Friday, 8am to 6pm, here in Ladbroke Grove."
+  />
+</Layout>

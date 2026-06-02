@@ -1,0 +1,16 @@
+---
+import Icon from './Icon.astro';
+import { trustBadges } from '../data/site';
+interface Props { dark?: boolean; class?: string }
+const { dark = false, class: cls = '' } = Astro.props;
+---
+<ul class:list={['flex flex-wrap items-center gap-2.5', cls]}>
+  {trustBadges.map((b, i) => (
+    <li class="reveal" style={`--reveal-delay:${i * 55}ms`}>
+      <span class:list={['chip', dark && 'border-white/15 bg-white/10 text-white/85 backdrop-blur']}>
+        <Icon name={b.icon} size={16} class={dark ? 'text-brand-300' : 'text-brand-500'} />
+        {b.label}
+      </span>
+    </li>
+  ))}
+</ul>

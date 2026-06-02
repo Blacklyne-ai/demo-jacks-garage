@@ -1,0 +1,28 @@
+---
+import { ArrowUpRight, ArrowRight } from '@lucide/astro';
+import Icon from './Icon.astro';
+import { quickActions } from '../data/site';
+---
+<div class="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+  {quickActions.map((a, i) => (
+    <a
+      href={a.href}
+      target={a.external ? '_blank' : undefined}
+      rel={a.external ? 'noopener' : undefined}
+      class="group reveal relative flex flex-col overflow-hidden rounded-3xl border border-line bg-white p-6 shadow-card transition-all duration-500 hover:-translate-y-1.5 hover:border-brand-300 hover:shadow-card-hover"
+      style={`--reveal-delay:${i * 80}ms`}
+    >
+      <span class="icon-tile transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white">
+        <Icon name={a.icon} size={24} />
+      </span>
+      <h3 class="mt-5 text-h3 font-bold text-ink">{a.title}</h3>
+      <p class="mt-2 flex-1 text-[0.9rem] leading-relaxed text-muted">{a.text}</p>
+      <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+        {a.cta}
+        {a.external
+          ? <ArrowUpRight size={16} strokeWidth={2.2} class="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+          : <ArrowRight size={16} strokeWidth={2.2} class="arrow transition-transform duration-300 group-hover:translate-x-1" />}
+      </span>
+    </a>
+  ))}
+</div>

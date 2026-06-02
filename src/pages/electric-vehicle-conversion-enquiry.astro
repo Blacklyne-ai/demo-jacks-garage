@@ -1,0 +1,110 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { Phone, ArrowRight, ArrowUpRight } from '@lucide/astro';
+import { site } from '../data/site';
+
+const fields = [
+  { name: 'name', label: 'Name', type: 'text', required: true },
+  { name: 'email', label: 'Email', type: 'email', required: true },
+  { name: 'phone', label: 'Telephone', type: 'tel', required: true },
+  { name: 'model', label: 'VW model', type: 'select', required: true, options: ['VW Beetle', 'VW Karmann Ghia', 'VW T1 / Splitscreen', 'VW T2 Bay window', 'VW T3', 'VW Type 3', 'Other classic VW'] },
+  { name: 'year', label: 'Year', type: 'text', placeholder: 'e.g. 1972' },
+  { name: 'condition', label: 'Current condition', type: 'select', options: ['Running', 'Project', 'Restoration'] },
+  { name: 'use', label: 'How you\'ll use it', type: 'select', options: ['Daily Driver', 'Show Car', 'Vintage Cruise'] },
+  { name: 'budget', label: 'Budget', type: 'select', options: ['Under £50k (3rd-gen)', '£50k - £100k', '£100k+', 'Not sure - please advise'] },
+  { name: 'photos', label: 'Photos of your VW', type: 'file', help: 'Photos of your VW help us quote' },
+  { name: 'message', label: 'Tell us about your VW', type: 'textarea', required: true, full: true, placeholder: 'The model, what you love about it, where you\'d like to take it electric…' },
+] as const;
+
+const next = [
+  { icon: 'Phone', title: 'We talk it through', text: "We'll call or email to understand your VW, how you use it and the kind of electric build you have in mind." },
+  { icon: 'Gauge', title: 'We assess your VW', text: 'We check the chassis can take the new motor and battery, then map out the right conversion generation for you.' },
+  { icon: 'BadgeCheck', title: 'You get an honest quote', text: 'A clear, indicative quote with no surprises - and the freedom to take your time over the decision.' },
+];
+
+const facts = [
+  { icon: 'Cable', label: 'Genuine VW components', value: 'eClassics kits' },
+  { icon: 'CalendarClock', label: 'Typical turnaround', value: '1 - 6 weeks' },
+  { icon: 'PoundSterling', label: '3rd-gen build', value: 'From under £50k' },
+];
+---
+<Layout
+  title="EV Conversion Enquiry - Jack's Garage | Classic VW Specialists London W10"
+  description="Enquire about converting your classic VW to electric at Jack's Garage, London W10. eClassics kits, genuine VW components, builds in 1-6 weeks."
+  path="/electric-vehicle-conversion-enquiry"
+  image="/images/ev/ev-01.jpg"
+>
+  <PageHero
+    eyebrow="EV Conversion Enquiry"
+    title="Let's electrify your classic VW"
+    subtitle="Tell us about your Volkswagen and the electric future you have in mind. As the UK distributor of <strong>eClassics</strong> conversion kits, we future-proof iconic VWs with genuine Volkswagen components - while keeping every bit of their classic character."
+    image="/images/ev/ev-01.jpg"
+    imageAlt="A classic Volkswagen Beetle converted to electric at Jack's Garage"
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'EV Conversion Enquiry' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href="/services/electric-vehicle-conversions" class="btn btn-outline btn-lg">How it works <ArrowRight size={16} class="arrow" /></a>
+  </PageHero>
+
+  <!-- Form + reassurance -->
+  <section class="section">
+    <div class="container-jg grid gap-10 lg:grid-cols-[1.5fr_1fr] lg:items-start">
+      <div>
+        <h2 class="reveal text-h2 font-bold text-ink">Tell us about your VW</h2>
+        <p class="reveal mt-2 text-muted" style="--reveal-delay:60ms">The more you can share, the better we can advise. There's no obligation - just a friendly conversation about going electric.</p>
+        <div class="reveal mt-6" style="--reveal-delay:120ms">
+          <EnquiryForm formName="ev-conversion-enquiry" fields={fields} submitLabel="Send enquiry" />
+        </div>
+      </div>
+
+      <aside class="flex flex-col gap-5 lg:sticky lg:top-28">
+        <!-- What happens next -->
+        <div class="reveal rounded-3xl border border-line bg-white p-7 shadow-card">
+          <span class="eyebrow">What happens next</span>
+          <h3 class="mt-3 text-h3 font-bold text-ink">A relaxed, honest process</h3>
+          <ol class="mt-6 space-y-5">
+            {next.map((s, i) => (
+              <li class="flex gap-4">
+                <span class="icon-tile h-11 w-11 shrink-0"><Icon name={s.icon} size={20} /></span>
+                <span class="min-w-0">
+                  <span class="block text-[0.95rem] font-semibold text-ink">{s.title}</span>
+                  <span class="mt-0.5 block text-sm leading-relaxed text-muted">{s.text}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        <!-- Key facts -->
+        <div class="reveal grid gap-3" style="--reveal-delay:80ms">
+          {facts.map((f) => (
+            <div class="flex items-center gap-4 rounded-2xl border border-line bg-cream-200 p-4">
+              <span class="icon-tile h-11 w-11 shrink-0"><Icon name={f.icon} size={20} /></span>
+              <span class="min-w-0">
+                <span class="block text-[0.8rem] font-medium uppercase tracking-wide text-muted">{f.label}</span>
+                <span class="block text-[1.05rem] font-bold text-ink">{f.value}</span>
+              </span>
+            </div>
+          ))}
+        </div>
+
+        <!-- Pricing reassurance -->
+        <div class="reveal rounded-3xl border border-brand-200/70 bg-brand-50/60 p-7" style="--reveal-delay:120ms">
+          <p class="text-[0.95rem] leading-relaxed text-ink-700">
+            Every build is sourced through <span class="font-semibold text-ink">eClassics</span> in Stuttgart, using <span class="font-semibold text-ink">Volkswagen's very latest EV components</span> direct from Volkswagen Group Components. A typical conversion takes <span class="font-semibold text-ink">one to six weeks</span>, with pricing <span class="font-semibold text-ink">indicative from under £50k</span> for a 3rd-generation build.
+          </p>
+          <a href="/services/electric-vehicle-conversions" class="group mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+            See how EV conversions work
+            <ArrowUpRight size={16} class="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand title="Ready to take your VW electric?" subtitle="Send the form above, or call the workshop for a friendly chat about converting your classic VW. We're here Monday to Friday, 8am to 6pm, in Ladbroke Grove." />
+</Layout>

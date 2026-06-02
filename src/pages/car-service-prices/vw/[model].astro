@@ -1,0 +1,146 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import DetailSidebar from '../../../components/DetailSidebar.astro';
+import Icon from '../../../components/Icon.astro';
+import { Phone, ArrowRight, Check, BadgeCheck } from '@lucide/astro';
+import { site } from '../../../data/site';
+import { models, getModel, modelIntro, displayName, tiersFor, WARRANTY_BLOCK, HERO_STRAPLINE } from '../../../data/models';
+import { getService } from '../../../data/services';
+
+export function getStaticPaths() {
+  return models.map((m) => ({ params: { model: m.slug }, props: { model: m } }));
+}
+
+const { model } = Astro.props;
+const intro = modelIntro(model);
+const tiers = tiersFor(model);
+
+// Applicable services per era / body type.
+let svcSlugs: string[];
+if (model.era === 'Classic') svcSlugs = ['classic-vw-car-service', 'classic-vw-specialist', 'classic-vw-car-repairs', 'classic-vw-car-restoration', 'vw-bodywork', 'mot'];
+else if (model.era === 'Electric & Hybrid') svcSlugs = ['electric-cars-repairs-and-servicing', 'electric-vehicle-conversions', 'car-servicing', 'car-brakes', 'car-tyres', 'mot'];
+else svcSlugs = ['car-servicing', 'mot', 'engine-diagnostics', 'car-brakes', 'clutch-replacement', 'vw-bodywork'];
+if (model.suffix === 'Van') svcSlugs = ['vw-van-repairs-servicing', 'vw-campervan-repairs-servicing-2', 'vw-campervan-mot', ...svcSlugs].filter((v, i, a) => a.indexOf(v) === i).slice(0, 6);
+const applicable = svcSlugs.map(getService).filter(Boolean);
+
+const related = models.filter((m) => m.era === model.era && m.slug !== model.slug).slice(0, 4);
+const metaDesc = `Independent ${model.name} servicing in Ladbroke Grove, London W10. Warranty safe since 1995, with Oil, Engine & Full services. Call Jack's Garage 020 7243 8926.`;
+---
+<Layout
+  title={`${model.name} Servicing in London - Jack's Garage | Classic VW Specialists`}
+  description={metaDesc}
+  path={`/car-service-prices/vw/${model.slug}`}
+  image={model.image ?? '/images/workshop/ws-11.jpg'}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-white pt-32 md:pt-40">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-60 [background-size:46px_46px]"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-[30rem] w-[30rem] rounded-full bg-brand-500/10 blur-3xl"></div>
+    <div class="container-jg relative grid items-center gap-12 pb-14 md:pb-20 lg:grid-cols-2">
+      <div>
+        <nav aria-label="Breadcrumb" class="reveal mb-6 flex flex-wrap items-center gap-2 text-sm text-muted">
+          <a href="/" class="transition-colors hover:text-brand-700">Home</a><span class="text-line">/</span>
+          <a href="/car-service-prices/vw" class="transition-colors hover:text-brand-700">VW Servicing</a><span class="text-line">/</span>
+          <span class="text-ink">{model.name}</span>
+        </nav>
+        <span class="eyebrow reveal">{model.era} VW</span>
+        <h1 class="reveal mt-4 text-d2 text-ink" style="--reveal-delay:60ms">{displayName(model)}</h1>
+        <p class="reveal mt-5 text-body-xl leading-relaxed text-muted" style="--reveal-delay:120ms">{HERO_STRAPLINE}.</p>
+        <div class="reveal mt-8 flex flex-wrap gap-3" style="--reveal-delay:180ms">
+          <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+          <a href="/service-enquiry" class="btn btn-outline btn-lg">Service Enquiry <ArrowRight size={16} class="arrow" /></a>
+        </div>
+      </div>
+      <div class="reveal relative" style="--reveal-delay:140ms">
+        <div aria-hidden="true" class="absolute -inset-3 -z-10 rounded-[2.25rem] bg-orange-grad opacity-15 blur-2xl"></div>
+        {model.image ? (
+          <img src={model.image} alt={`VW ${model.short} servicing at Jack's Garage`} width="825" height="620" loading="eager" class="aspect-[4/3] w-full rounded-3xl border border-line object-cover shadow-glass-lg" />
+        ) : (
+          <div class="flex aspect-[4/3] w-full items-center justify-center rounded-3xl border border-line bg-gradient-to-br from-cream-300 to-cream-200 shadow-glass-lg">
+            <div class="text-center">
+              <Icon name={model.icon} size={72} class="mx-auto text-brand-500/55" />
+              <p class="mt-3 font-display text-2xl font-extrabold text-ink/80">{model.name}</p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <section class="section">
+    <div class="container-jg grid gap-12 lg:grid-cols-[1.7fr_1fr]">
+      <div>
+        <div class="prose-jg max-w-2xl">
+          <p class="text-body-xl text-ink-700">{intro.p1}</p>
+          <p>{intro.p2}</p>
+          <p class="font-semibold text-ink">{intro.cta}</p>
+        </div>
+
+        <!-- Service tiers -->
+        <div class="mt-10">
+          <h2 class="text-h2 font-bold text-ink">{model.name} service options</h2>
+          <p class="mt-2 text-sm text-muted">Each level builds on the one before. All servicing is priced on application (POA).</p>
+          <div class="mt-6 grid gap-5 md:grid-cols-3">
+            {tiers.map((t) => (
+              <div class="flex flex-col rounded-3xl border border-line bg-cream-200 p-6">
+                <div class="flex items-center justify-between">
+                  <h3 class="text-h3 font-bold text-ink">{t.name}</h3>
+                  <span class="font-mono text-xs font-semibold text-brand-600">POA</span>
+                </div>
+                <ul class="mt-4 flex-1 space-y-2">
+                  {t.includes.map((item) => (
+                    <li class="flex items-start gap-2 text-[0.85rem] leading-relaxed text-ink-700">
+                      <span class="mt-0.5 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-brand-500 text-white"><Check size={10} strokeWidth={3} /></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <!-- Warranty -->
+        <div class="mt-10 flex flex-col gap-4 rounded-3xl border border-line bg-white p-6 shadow-card md:flex-row md:items-start md:p-8">
+          <span class="icon-tile h-12 w-12 shrink-0"><BadgeCheck size={24} /></span>
+          <div>
+            <h2 class="text-h3 font-bold text-ink">{WARRANTY_BLOCK.heading}</h2>
+            <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">{WARRANTY_BLOCK.text}</p>
+          </div>
+        </div>
+
+        <!-- Applicable services -->
+        <div class="mt-10">
+          <h2 class="text-h3 font-bold text-ink">Services for your {model.short}</h2>
+          <div class="mt-5 grid gap-3 sm:grid-cols-2">
+            {applicable.map((s) => (
+              <a href={`/services/${s!.slug}`} class="group flex items-center gap-3 rounded-2xl border border-line bg-white p-4 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card-hover">
+                <span class="icon-tile h-10 w-10 rounded-xl"><Icon name={s!.icon} size={18} /></span>
+                <span class="flex-1 text-[0.9rem] font-semibold text-ink">{s!.name}</span>
+                <ArrowRight size={15} class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600" />
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Related models -->
+        <div class="mt-10">
+          <h2 class="text-h3 font-bold text-ink">More {model.era} VWs</h2>
+          <div class="mt-5 flex flex-wrap gap-2.5">
+            {related.map((r) => (
+              <a href={`/car-service-prices/vw/${r.slug}`} class="inline-flex items-center gap-2 rounded-pill border border-line bg-white px-4 py-2 text-sm font-medium text-ink-700 transition-colors hover:border-brand-400 hover:text-brand-700">
+                <Icon name={r.icon} size={15} class="text-brand-500" /> {r.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <DetailSidebar />
+    </div>
+  </section>
+
+  <CtaBand title={`Book your ${model.name} in`} />
+</Layout>

@@ -1,0 +1,25 @@
+---
+import { Phone, ArrowRight } from '@lucide/astro';
+import { site } from '../data/site';
+interface Props { title?: string; subtitle?: string }
+const {
+  title = 'Ready to get your VW serviced?',
+  subtitle = 'Call the team for honest advice and a quote, or send us an enquiry. We are open Monday to Friday, 8am to 6pm, here in Ladbroke Grove.',
+} = Astro.props;
+---
+<section class="section">
+  <div class="container-jg">
+    <div class="relative overflow-hidden rounded-4xl bg-mesh-ink px-6 py-14 text-center shadow-glass-lg md:px-16 md:py-20">
+      <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-[0.06] [background-size:40px_40px]"></div>
+      <div class="relative mx-auto max-w-2xl">
+        <span class="eyebrow eyebrow-on-dark reveal">Talk to the VW specialists</span>
+        <h2 class="reveal mt-4 text-d3 text-white" style="--reveal-delay:60ms">{title}</h2>
+        <p class="reveal mt-4 text-body-xl text-white/70" style="--reveal-delay:120ms">{subtitle}</p>
+        <div class="reveal mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row" style="--reveal-delay:180ms">
+          <a href={site.phone.href} class="btn btn-primary btn-lg w-full sm:w-auto"><Phone size={18} /> Call {site.phone.display}</a>
+          <a href="/contact-us" class="btn btn-ghost-light btn-lg w-full sm:w-auto">Get a Quote <ArrowRight size={18} class="arrow" /></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

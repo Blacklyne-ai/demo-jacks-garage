@@ -1,0 +1,171 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import ProcessSteps from '../../components/ProcessSteps.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { Phone, ArrowRight, Check, Star } from '@lucide/astro';
+import { site } from '../../data/site';
+import { SERVICE_CLOSING } from '../../data/services';
+import { press } from '../../data/press';
+
+const steps = [
+  { n: '01', title: 'Assess the chassis', icon: 'Gauge', text: 'First we check that the chassis can accommodate the new components - the battery and the motor.' },
+  { n: '02', title: 'Strip & prepare', icon: 'Wrench', text: 'The engine, gearbox and fuel tank are removed. The vehicle is made structurally sound with a little welding and repositioning of components.' },
+  { n: '03', title: 'Install & wire', icon: 'Cable', text: 'We fit the conversion unit, wire everything in place and load the software.' },
+  { n: '04', title: 'Upgrade & test', icon: 'Check', text: 'We carry out any upgrades to steering, suspension or brakes as required, then test. The whole process takes one to six weeks.' },
+];
+
+const generations = [
+  { gen: '1st Generation', price: 'From c. £30k', recommended: false, points: ['Largely recycled components from scrapped EVs, such as Teslas', 'The battery goes into the car', 'Very limited warranty'] },
+  { gen: '3rd Generation', price: 'From under £50k', recommended: true, points: ['Components sourced directly from VW', 'Very high-quality, reliable builds', 'Warranty valid with any conversion partner'] },
+  { gen: '2nd Generation', price: '£100k +', recommended: false, points: ['All-new parts throughout', 'Battery sits underneath, lowering the centre of gravity', 'Parts warrantied by the converting workshop'] },
+];
+
+const benefits = [
+  { icon: 'Wrench', title: 'Less servicing', text: 'A new bionic body that requires significantly less maintenance.' },
+  { icon: 'PoundSterling', title: 'Cheaper to run', text: 'New parts are cheaper, and the cost per mile is much lower.' },
+  { icon: 'Leaf', title: 'Zero emissions', text: 'No tailpipe pollution from the car you already love.' },
+  { icon: 'ShieldCheck', title: 'ULEZ-friendly', text: 'A zero-emissions classic that shrugs off London\'s emission zones.' },
+  { icon: 'Car', title: 'Keeps its character', text: 'All the classic looks and charm - silent, and electric.' },
+  { icon: 'Zap', title: 'Modern reliability', text: 'A dependable EV drivetrain beneath that timeless bodywork.' },
+];
+
+const gallery = ['ev-02', 'ev-03', 'ev-04', 'ev-06', 'ev-07', 'ev-08', 'ev-09', 'ev-11'];
+---
+<Layout
+  title="Electric Vehicle Conversions for Classic VWs in London - Jack's Garage"
+  description="Convert your classic VW to electric with Jack's Garage, London - UK distributor of eClassics conversion kits using genuine VW components. Future-proof your Beetle or Bus. Call 020 7243 8926."
+  path="/services/electric-vehicle-conversions"
+  image="/images/ev/ev-01.jpg"
+>
+  <!-- Hero -->
+  <section class="relative flex min-h-[78vh] items-end overflow-hidden">
+    <img src="/images/ev/ev-01.jpg" alt="The eClassics eBasis electric base-chassis for classic Volkswagens" class="absolute inset-0 h-full w-full object-cover object-center" width="1600" height="900" fetchpriority="high" />
+    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/80 to-ink-950/30"></div>
+    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-ink-950 to-transparent"></div>
+    <div class="container-jg relative w-full pb-14 pt-36 md:pb-20">
+      <nav aria-label="Breadcrumb" class="mb-6 flex flex-wrap items-center gap-2 text-sm text-white/60 animate-fade-in">
+        <a href="/" class="hover:text-white">Home</a><span>/</span><a href="/services" class="hover:text-white">Services</a><span>/</span><span class="text-white/90">Electric Vehicle Conversions</span>
+      </nav>
+      <span class="eyebrow eyebrow-on-dark animate-fade-in">UK distributor of eClassics kits</span>
+      <h1 class="mt-4 max-w-3xl text-d2 text-white animate-fade-up" style="animation-delay:.08s">Electric Vehicle Conversions <span class="script-accent text-gold-400">- London</span></h1>
+      <p class="mt-5 max-w-2xl text-body-xl text-white/85 animate-fade-up" style="animation-delay:.16s">At Jack's Garage, we now provide an electric vehicle conversion service for your beloved Volkswagens.</p>
+      <div class="mt-8 flex flex-wrap gap-3 animate-fade-up" style="animation-delay:.24s">
+        <a href={site.enquiries.ev} class="btn btn-primary btn-lg">Start an EV Conversion Enquiry <ArrowRight size={18} class="arrow" /></a>
+        <a href={site.phone.href} class="btn btn-ghost-light btn-lg"><Phone size={18} /> {site.phone.display}</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container-jg grid gap-12 lg:grid-cols-[1.3fr_1fr] lg:items-center">
+      <div class="prose-jg max-w-2xl">
+        <p class="text-body-xl text-ink-700">Give your beloved VW a new bionic body that requires significantly less servicing. New parts are cheaper and the cost per mile is much cheaper.</p>
+        <p>By having your VW converted to electric, you eliminate the pollution that the fuel version would have created, and the pollution that manufacturing a new electric vehicle would produce.</p>
+        <p>As the UK distributor of eClassics' conversion kits, we use Volkswagen's very latest EV components - direct from Volkswagen Group Components - to future-proof these iconic vehicles while keeping every bit of their classic character. It's how Jack's Garage came to work on the all-new VW-improved classic Beetle conversion, the <span class="script-accent text-brand-600">e-Käfer</span>.</p>
+      </div>
+      <div class="grid gap-4">
+        <div class="rounded-3xl border border-line bg-cream-200 p-6">
+          <p class="font-mono text-3xl font-semibold text-brand-600">1-6</p>
+          <p class="text-sm text-muted">weeks for a typical conversion</p>
+        </div>
+        <div class="rounded-3xl border border-line bg-cream-200 p-6">
+          <p class="font-mono text-3xl font-semibold text-brand-600">3</p>
+          <p class="text-sm text-muted">generations of conversion unit to suit your budget</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading eyebrow="How we do it" title="From petrol classic to electric icon" intro="Every conversion follows the same careful path - and the whole process takes between one and six weeks." />
+      <div class="mt-14"><ProcessSteps steps={steps} /></div>
+    </div>
+  </section>
+
+  <!-- Generations / pricing -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading eyebrow="Three generations" title="A conversion to suit your build" intro="There are three generations of classic-car EV conversion unit available. Here's how they compare." />
+      <div class="mt-14 grid gap-6 lg:grid-cols-3">
+        {generations.map((g, i) => (
+          <div class:list={['reveal relative flex flex-col rounded-3xl border bg-white p-7 shadow-card', g.recommended ? 'border-brand-400 ring-1 ring-brand-400' : 'border-line']} style={`--reveal-delay:${i * 90}ms`}>
+            {g.recommended && <span class="absolute -top-3 left-7 inline-flex items-center gap-1 rounded-pill bg-orange-grad px-3 py-1 text-xs font-bold text-white"><Star size={12} fill="currentColor" strokeWidth={0} /> Best value</span>}
+            <h3 class="text-h2 font-bold text-ink">{g.gen}</h3>
+            <p class="mt-2 font-mono text-2xl font-semibold text-brand-600">{g.price}</p>
+            <ul class="mt-5 flex-1 space-y-3">
+              {g.points.map((p) => (
+                <li class="flex items-start gap-3 text-[0.95rem] leading-relaxed text-ink-700">
+                  <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600"><Check size={13} strokeWidth={3} /></span>
+                  {p}
+                </li>
+              ))}
+            </ul>
+            <a href={site.enquiries.ev} class:list={['btn btn-lg mt-7', g.recommended ? 'btn-primary' : 'btn-outline']}>Enquire <ArrowRight size={16} class="arrow" /></a>
+          </div>
+        ))}
+      </div>
+      <p class="reveal mx-auto mt-6 max-w-2xl text-center text-sm text-muted">Indicative starting prices from the conversion units we work with. Every build is quoted individually - <a href={site.enquiries.ev} class="font-semibold text-brand-700 underline underline-offset-2">tell us about your VW</a>.</p>
+    </div>
+  </section>
+
+  <!-- Benefits -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading eyebrow="Why convert" title="The best of both worlds" intro="A classic Volkswagen you love, with the running costs and conscience of a modern EV." />
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {benefits.map((b, i) => (
+          <div class="reveal rounded-3xl border border-line bg-white p-6 shadow-card" style={`--reveal-delay:${(i % 3) * 80}ms`}>
+            <span class="icon-tile"><Icon name={b.icon} size={24} /></span>
+            <h3 class="mt-5 text-h3 font-bold text-ink">{b.title}</h3>
+            <p class="mt-2 text-[0.9rem] leading-relaxed text-muted">{b.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Portfolio gallery -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading eyebrow="From the workshop" title="Conversions in progress" intro="A glimpse inside the EV conversion bay at Jack's Garage." />
+      <div class="mt-14 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+        {gallery.map((g, i) => (
+          <div class="reveal overflow-hidden rounded-2xl border border-line bg-cream-300 shadow-card" style={`--reveal-delay:${(i % 4) * 70}ms`}>
+            <img src={`/images/ev/${g}.jpg`} alt="Electric conversion work at Jack's Garage" width="600" height="450" loading="lazy" class="aspect-[4/3] w-full object-cover transition-transform duration-700 hover:scale-105" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Press -->
+  <section class="section bg-ink-950 text-white">
+    <div class="container-jg">
+      <SectionHeading dark eyebrow="In the press" title="The conversion the magazines noticed" intro="Our EV conversions earned features in six motoring titles in early 2020." />
+      <div class="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {press.map((p) => (
+          <a href={`/promotions/${p.slug}`} class="group flex items-center gap-4 rounded-2xl border border-white/10 bg-white/[0.04] p-4 transition-colors hover:border-brand-400 hover:bg-white/[0.07]">
+            <img src={p.cover} alt={p.magazine} width="120" height="80" loading="lazy" class="h-16 w-24 shrink-0 rounded-lg object-cover" />
+            <span class="min-w-0">
+              <span class="block text-[0.9rem] font-semibold text-white">{p.magazine.replace(' Magazine', '')}</span>
+              <span class="block text-xs text-white/55">{p.edition}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section pb-0">
+    <div class="container-jg">
+      <p class="mx-auto max-w-2xl border-l-2 border-brand-300 pl-5 text-center text-[0.95rem] italic leading-relaxed text-muted md:text-left">{SERVICE_CLOSING}</p>
+    </div>
+  </section>
+
+  <CtaBand title="Ready to electrify your classic VW?" subtitle="Tell us about your Beetle, Bus or Type 3 and we'll talk you through the options, timescales and costs. To find out more, contact us online or call 020 7243 8926." />
+</Layout>

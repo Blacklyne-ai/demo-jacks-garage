@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/Icon.astro';
+import { Phone, ArrowRight } from '@lucide/astro';
+import { site } from '../../data/site';
+import { servicesByCategory, services } from '../../data/services';
+
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+---
+<Layout
+  title="VW Repairs & Services in London - Jack's Garage | 26 Services for Every Volkswagen"
+  description="All 26 VW repair and servicing options at Jack's Garage, Classic VW specialists in Ladbroke Grove, London W10. MOT, bodywork, classic restoration & EV. Call 020 7243 8926."
+  path="/services"
+  image="/images/workshop/ws-03.jpg"
+>
+  <PageHero
+    eyebrow="VW Repairs & Services"
+    title="Everything your Volkswagen needs, under one roof"
+    subtitle="From a puncture to a full restoration - and from a Splitscreen Bus to an ID.5 - our specialist team covers <strong>26 services</strong> across every era of VW."
+    image="/images/workshop/ws-03.jpg"
+    imageAlt="A Volkswagen being worked on in the Jack's Garage workshop"
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Services' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href="/contact-us" class="btn btn-outline btn-lg">Get a Quote <ArrowRight size={16} class="arrow" /></a>
+  </PageHero>
+
+  <!-- Category jump nav -->
+  <section class="sticky top-[84px] z-30 border-y border-line bg-cream-100/90 backdrop-blur">
+    <div class="container-jg flex gap-2 overflow-x-auto py-3.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+      {servicesByCategory.map((g) => (
+        <a href={`#${slugify(g.category)}`} class="shrink-0 rounded-pill border border-line bg-white px-4 py-1.5 text-sm font-medium text-ink-700 transition-colors hover:border-brand-400 hover:text-brand-700">{g.category}</a>
+      ))}
+    </div>
+  </section>
+
+  <div class="section space-y-16">
+    {servicesByCategory.map((g) => (
+      <section id={slugify(g.category)} class="container-jg scroll-mt-40">
+        <div class="mb-7 flex items-center gap-3">
+          <h2 class="text-h2 font-bold text-ink">{g.category}</h2>
+          <span class="h-px flex-1 bg-line"></span>
+          <span class="font-mono text-xs text-muted">{g.items.length}</span>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {g.items.map((s) => (
+            <a href={`/services/${s.slug}`} class="group reveal flex items-start gap-4 rounded-2xl border border-line bg-white p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card-hover">
+              <span class="icon-tile h-12 w-12 shrink-0 transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white"><Icon name={s.icon} size={22} /></span>
+              <span class="min-w-0">
+                <span class="flex items-center gap-1.5 font-bold text-ink">{s.name}<ArrowRight size={15} class="text-muted opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-brand-600 group-hover:opacity-100" /></span>
+                <span class="mt-1 block text-[0.875rem] leading-relaxed text-muted">{s.tagline}</span>
+              </span>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <CtaBand />
+</Layout>

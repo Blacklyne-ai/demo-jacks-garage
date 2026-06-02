@@ -1,0 +1,146 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '@fontsource/dm-serif-display';
+import '@fontsource/dm-serif-display/400-italic.css';
+import '../styles/global.css';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import CookieBanner from '../components/CookieBanner.astro';
+import { site } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  path?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/images/jg/hero-1.jpg',
+  path = '',
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(path, Astro.site ?? site.url).href;
+const ogImage = new URL(image, Astro.site ?? site.url).href;
+
+// Schema.org — AutoRepair (a LocalBusiness subtype).
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AutoRepair',
+  '@id': site.url + '/#business',
+  name: site.name,
+  description,
+  url: site.url,
+  telephone: site.phone.tel,
+  image: ogImage,
+  logo: new URL('/logo.png', site.url).href,
+  foundingDate: String(site.established),
+  slogan: 'Classic VW specialists in London',
+  priceRange: '££',
+  currenciesAccepted: 'GBP',
+  paymentAccepted: 'Cash, Credit Card, Debit Card',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: site.address.line1,
+    addressLocality: site.address.city,
+    addressRegion: site.address.region,
+    postalCode: site.address.postcode,
+    addressCountry: 'GB',
+  },
+  geo: { '@type': 'GeoCoordinates', latitude: site.geo.lat, longitude: site.geo.lng },
+  areaServed: ['Ladbroke Grove', 'Notting Hill', 'Kensington', 'North Kensington', 'West London', 'London'],
+  sameAs: [site.facebook],
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+      opens: '08:00',
+      closes: '18:00',
+    },
+  ],
+  makesOffer: [
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Electric Vehicle Conversions for Classic VWs' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Classic VW Specialist Repairs' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'VW Servicing' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'VW Bodywork' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'MOT Preparation' } },
+    { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Classic VW Restoration' } },
+  ],
+};
+---
+<!doctype html>
+<html lang="en-GB">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en-GB" href={canonical} />
+
+    <link rel="icon" type="image/png" href="/images/favicon-270.png" />
+    <link rel="apple-touch-icon" href="/images/favicon-270.png" />
+    <meta name="theme-color" content="#FAF8F2" />
+    <meta name="color-scheme" content="light" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="en_GB" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://maps.google.com" />
+    <noscript><style>.reveal{opacity:1!important;transform:none!important}</style></noscript>
+
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body>
+    <a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[200] focus:rounded-xl focus:bg-ink focus:px-4 focus:py-2 focus:text-white">Skip to content</a>
+
+    <Nav />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+    <MobileBar />
+    <CookieBanner />
+
+    <!-- Global scroll-reveal: progressively enhanced, reduced-motion aware -->
+    <script>
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      const els = document.querySelectorAll<HTMLElement>('.reveal');
+      if (prefersReduced || !('IntersectionObserver' in window)) {
+        els.forEach((el) => el.classList.add('is-visible'));
+      } else {
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                (e.target as HTMLElement).classList.add('is-visible');
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: '0px 0px -10% 0px', threshold: 0.08 }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+    </script>
+  </body>
+</html>

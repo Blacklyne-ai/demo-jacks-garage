@@ -1,0 +1,109 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import DetailSidebar from '../../components/DetailSidebar.astro';
+import Icon from '../../components/Icon.astro';
+import { Phone, ArrowRight, ArrowUpRight, Check, ShieldCheck } from '@lucide/astro';
+import { site } from '../../data/site';
+import { services, getService, SERVICE_CLOSING } from '../../data/services';
+
+export function getStaticPaths() {
+  // electric-vehicle-conversions has a dedicated featured page.
+  return services
+    .filter((s) => s.slug !== 'electric-vehicle-conversions')
+    .map((s) => ({ params: { slug: s.slug }, props: { service: s } }));
+}
+
+const { service } = Astro.props;
+const related = (service.related ?? []).map(getService).filter(Boolean).slice(0, 3);
+const metaDesc = `${service.tagline} at Jack's Garage, Classic VW specialists in Ladbroke Grove, London W10. Call 020 7243 8926.`;
+const isMot = service.slug === 'mot';
+---
+<Layout
+  title={`${service.name} in London - Jack's Garage | Classic VW Specialists`}
+  description={metaDesc}
+  path={`/services/${service.slug}`}
+  image={service.image}
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-white pt-32 md:pt-40">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-60 [background-size:46px_46px]"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-[30rem] w-[30rem] rounded-full bg-brand-500/10 blur-3xl"></div>
+    <div class="container-jg relative grid items-center gap-12 pb-14 md:pb-20 lg:grid-cols-2">
+      <div>
+        <nav aria-label="Breadcrumb" class="reveal mb-6 flex flex-wrap items-center gap-2 text-sm text-muted">
+          <a href="/" class="transition-colors hover:text-brand-700">Home</a><span class="text-line">/</span>
+          <a href="/services" class="transition-colors hover:text-brand-700">Services</a><span class="text-line">/</span>
+          <span class="text-ink">{service.name}</span>
+        </nav>
+        <span class="eyebrow reveal">{service.category}</span>
+        <h1 class="reveal mt-4 text-d2 text-ink" style="--reveal-delay:60ms">{service.name} <span class="text-muted">- London</span></h1>
+        <p class="reveal mt-5 text-body-xl leading-relaxed text-muted" style="--reveal-delay:120ms">{service.tagline}</p>
+        <div class="reveal mt-8 flex flex-wrap gap-3" style="--reveal-delay:180ms">
+          <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+          <a href="/contact-us" class="btn btn-outline btn-lg">Get a Quote <ArrowRight size={16} class="arrow" /></a>
+        </div>
+      </div>
+      <div class="reveal relative" style="--reveal-delay:140ms">
+        <div aria-hidden="true" class="absolute -inset-3 -z-10 rounded-[2.25rem] bg-orange-grad opacity-15 blur-2xl"></div>
+        <img src={service.image} alt={`${service.name} at Jack's Garage`} width="825" height="620" loading="eager" class="aspect-[4/3] w-full rounded-3xl border border-line object-cover shadow-glass-lg" />
+        <span class="absolute left-4 top-4 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-white/92 text-brand-600 shadow-glass backdrop-blur"><Icon name={service.icon} size={26} /></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Body -->
+  <section class="section">
+    <div class="container-jg grid gap-12 lg:grid-cols-[1.7fr_1fr]">
+      <div>
+        <div class="prose-jg max-w-2xl">
+          <p class="text-body-xl text-ink-700">{service.intro}</p>
+          {service.body?.map((para) => <p>{para}</p>)}
+        </div>
+
+        {isMot && (
+          <a href={site.motCheckUrl} target="_blank" rel="noopener" class="mt-8 inline-flex items-center gap-3 rounded-2xl border border-brand-200 bg-brand-50 px-5 py-4 transition-colors hover:border-brand-400">
+            <span class="icon-tile h-11 w-11"><ShieldCheck size={20} /></span>
+            <span><span class="block font-semibold text-ink">Check your MOT status</span><span class="block text-sm text-muted">Free GOV.UK vehicle enquiry service</span></span>
+            <ArrowUpRight size={18} class="ml-2 text-brand-600" />
+          </a>
+        )}
+
+        <!-- What's included -->
+        <div class="mt-10 rounded-3xl border border-line bg-cream-200 p-6 md:p-8">
+          <h2 class="text-h2 font-bold text-ink">What's included</h2>
+          <ul class="mt-5 grid gap-3 sm:grid-cols-2">
+            {service.includes.map((item) => (
+              <li class="flex items-start gap-3">
+                <span class="mt-0.5 inline-flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-500 text-white"><Check size={14} strokeWidth={3} /></span>
+                <span class="text-[0.95rem] leading-relaxed text-ink-700">{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p class="mt-8 max-w-2xl border-l-2 border-brand-300 pl-5 text-[0.95rem] italic leading-relaxed text-muted">{SERVICE_CLOSING}</p>
+
+        <!-- Related -->
+        {related.length > 0 && (
+          <div class="mt-12">
+            <h2 class="text-h3 font-bold text-ink">Related services</h2>
+            <div class="mt-5 grid gap-4 sm:grid-cols-3">
+              {related.map((r) => (
+                <a href={`/services/${r!.slug}`} class="group flex items-center gap-3 rounded-2xl border border-line bg-white p-4 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card-hover">
+                  <span class="icon-tile h-10 w-10 rounded-xl"><Icon name={r!.icon} size={19} /></span>
+                  <span class="flex-1 text-[0.9rem] font-semibold text-ink">{r!.name}</span>
+                  <ArrowRight size={15} class="text-muted transition-transform group-hover:translate-x-0.5 group-hover:text-brand-600" />
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <DetailSidebar />
+    </div>
+  </section>
+
+  <CtaBand title={`Need ${service.name.toLowerCase()} for your VW?`} />
+</Layout>

@@ -1,0 +1,145 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { ArrowUpRight, ArrowRight } from '@lucide/astro';
+import { site, partners } from '../data/site';
+
+// Check-MOT utility + the three dedicated enquiry routes, as tiles.
+const shortcuts = [
+  {
+    title: 'Check MOT',
+    text: "Look up your VW's MOT history and expiry on the official GOV.UK vehicle enquiry service.",
+    href: site.motCheckUrl,
+    cta: 'Open GOV.UK',
+    icon: 'ShieldCheck',
+    external: true,
+  },
+  {
+    title: 'EV Conversion Enquiry',
+    text: 'Future-proof a classic Volkswagen with an eClassics electric conversion. Tell us about your VW.',
+    href: site.enquiries.ev,
+    cta: 'Start enquiry',
+    icon: 'Zap',
+    external: false,
+  },
+  {
+    title: 'Bodywork Enquiry',
+    text: 'Panel repairs, rust, paint and restoration on air-cooled and water-cooled VWs.',
+    href: site.enquiries.bodywork,
+    cta: 'Start enquiry',
+    icon: 'Hammer',
+    external: false,
+  },
+  {
+    title: 'Service Enquiry',
+    text: 'Book a service or MOT for any VW, classic to electric, here in Ladbroke Grove.',
+    href: site.enquiries.service,
+    cta: 'Start enquiry',
+    icon: 'Wrench',
+    external: false,
+  },
+] as const;
+---
+<Layout
+  title="Links - Jack's Garage | Classic VW Specialists London W10"
+  description="VW friends, parts suppliers and shows we rate - plus quick links to check your MOT and start an EV, bodywork or service enquiry with Jack's Garage in W10."
+  path="/links"
+>
+  <PageHero
+    eyebrow="Links"
+    title="VW friends, parts &amp; shows we rate"
+    subtitle="Three decades in the VW world means good company. These are the <strong>parts suppliers, EV partners and shows</strong> we trust - the same people who keep our classics on the road."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Links' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg">
+      <Icon name="Phone" size={18} /> {site.phone.display}
+    </a>
+    <a href="/contact-us" class="btn btn-outline btn-lg">
+      Contact the workshop <ArrowRight size={16} class="arrow" />
+    </a>
+  </PageHero>
+
+  <!-- Partners / trade links -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading
+        align="left"
+        eyebrow="Trusted by the team"
+        title="People &amp; places we recommend"
+        intro="A short, honest list of the suppliers and communities we genuinely rely on. Every link opens in a new tab."
+        class="max-w-2xl"
+      />
+      <ul class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {partners.map((p, i) => (
+          <li class="reveal" style={`--reveal-delay:${(i % 3) * 80}ms`}>
+            <a
+              href={p.href}
+              target="_blank"
+              rel="noopener"
+              class="group flex h-full flex-col rounded-3xl border border-line bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover"
+            >
+              <div class="flex items-start justify-between gap-4">
+                <h3 class="text-h3 font-bold text-ink transition-colors group-hover:text-brand-700">{p.name}</h3>
+                <span class="icon-tile h-11 w-11 shrink-0 transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white">
+                  <ArrowUpRight size={20} strokeWidth={2.2} class="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                </span>
+              </div>
+              <p class="mt-3 flex-1 text-[0.95rem] leading-relaxed text-muted">{p.note}</p>
+              <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+                Visit site
+                <ArrowUpRight size={15} strokeWidth={2.2} class="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+      <p class="reveal mt-8 max-w-2xl text-sm text-muted">
+        We're not paid to list anyone here - these are simply the names we'd give a friend with a VW. Run a VW business we should know about?
+        <a href={site.facebook} target="_blank" rel="noopener" class="font-medium text-brand-700 underline underline-offset-2">Say hello on Facebook</a>.
+      </p>
+    </div>
+  </section>
+
+  <!-- Quick utilities: Check MOT + enquiry shortcuts -->
+  <section class="section bg-ink-950">
+    <div class="container-jg">
+      <SectionHeading
+        dark
+        eyebrow="Quick links"
+        title="Check your MOT or start an enquiry"
+        intro="Look up your MOT in seconds, or jump straight to the right enquiry form for your VW."
+      />
+      <div class="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {shortcuts.map((s, i) => (
+          <a
+            href={s.href}
+            target={s.external ? '_blank' : undefined}
+            rel={s.external ? 'noopener' : undefined}
+            class="group reveal relative flex flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[0.04] p-6 transition-all duration-500 hover:-translate-y-1.5 hover:border-brand-400/60 hover:bg-white/[0.07]"
+            style={`--reveal-delay:${i * 80}ms`}
+          >
+            <span class="icon-tile-dark transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white">
+              <Icon name={s.icon} size={24} />
+            </span>
+            <h3 class="mt-5 text-h3 font-bold text-white">{s.title}</h3>
+            <p class="mt-2 flex-1 text-[0.9rem] leading-relaxed text-white/65">{s.text}</p>
+            <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-300">
+              {s.cta}
+              {s.external
+                ? <ArrowUpRight size={16} strokeWidth={2.2} class="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                : <ArrowRight size={16} strokeWidth={2.2} class="arrow transition-transform duration-300 group-hover:translate-x-1" />}
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Prefer to talk it through?"
+    subtitle="Whatever your VW needs, a quick call is the fastest way to honest advice and a quote. We're here Monday to Friday, 8am to 6pm, in Ladbroke Grove W10."
+  />
+</Layout>

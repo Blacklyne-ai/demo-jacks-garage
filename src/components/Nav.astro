@@ -1,0 +1,294 @@
+---
+import { Menu, X, Phone, ChevronDown, ArrowRight } from '@lucide/astro';
+import Icon from './Icon.astro';
+import { site } from '../data/site';
+import { servicesByCategory } from '../data/services';
+import { modelsByEra } from '../data/models';
+const { phone } = site;
+---
+<header id="siteNav" data-scrolled="false" class="fixed inset-x-0 top-0 z-[100]">
+  <div id="navPad" class="container-jg pt-4 md:pt-6">
+    <nav
+      id="navPill"
+      class="glass mx-auto flex max-w-[84rem] items-center justify-between gap-2 rounded-pill px-3.5 py-2.5 shadow-glass md:px-4 md:py-2.5"
+      aria-label="Primary"
+    >
+      <!-- Logo -->
+      <a href="/" class="flex shrink-0 items-center" aria-label="Jack's Garage - home">
+        <img src="/logo.png" alt="Jack's Garage - The VW specialists" width="855" height="160" class="h-7 w-auto md:h-[34px]" />
+      </a>
+
+      <!-- Center links (desktop xl+) -->
+      <div class="hidden items-center gap-0.5 xl:flex">
+        <a href="/" class="link-underline whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink">Home</a>
+        <a href="/about-us" class="link-underline whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink">About</a>
+
+        <!-- Services mega -->
+        <div class="group relative">
+          <a href="/services" class="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink" aria-haspopup="true">
+            Services
+            <ChevronDown size={15} strokeWidth={2} class="transition-transform duration-300 group-hover:rotate-180" />
+          </a>
+          <div class="invisible absolute left-1/2 top-full z-20 w-[780px] max-w-[92vw] -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+            <div class="glass overflow-hidden rounded-3xl p-4 shadow-glass-lg">
+              <div class="grid grid-cols-3 gap-x-5 gap-y-4">
+                {servicesByCategory.map((group) => (
+                  <div>
+                    <p class="mb-1.5 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-brand-700">{group.category}</p>
+                    <ul class="space-y-0.5">
+                      {group.items.map((s) => (
+                        <li>
+                          <a href={`/services/${s.slug}`} class="flex items-center gap-2 rounded-xl px-2 py-1.5 text-[0.85rem] text-ink-700 transition-colors hover:bg-brand-50 hover:text-brand-700">
+                            <Icon name={s.icon} size={15} class="shrink-0 text-brand-500" />
+                            {s.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <a href="/services" class="mt-3 flex items-center justify-between rounded-2xl bg-ink px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-ink-700">
+                View all 26 services
+                <ArrowRight size={18} class="arrow" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- VW Servicing (models) mega -->
+        <div class="group relative">
+          <a href="/car-service-prices/vw" class="inline-flex items-center gap-1 whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink" aria-haspopup="true">
+            VW Servicing
+            <ChevronDown size={15} strokeWidth={2} class="transition-transform duration-300 group-hover:rotate-180" />
+          </a>
+          <div class="invisible absolute left-1/2 top-full z-20 w-[720px] max-w-[92vw] -translate-x-1/2 translate-y-2 pt-3 opacity-0 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+            <div class="glass overflow-hidden rounded-3xl p-4 shadow-glass-lg">
+              <div class="grid grid-cols-3 gap-x-5 gap-y-2">
+                {modelsByEra.map((group) => (
+                  <div>
+                    <p class="mb-1.5 font-mono text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-brand-700">{group.label}</p>
+                    <ul class="space-y-0.5">
+                      {group.items.map((m) => (
+                        <li>
+                          <a href={`/car-service-prices/vw/${m.slug}`} class="flex items-center gap-2 rounded-xl px-2 py-1.5 text-[0.85rem] text-ink-700 transition-colors hover:bg-brand-50 hover:text-brand-700">
+                            <Icon name={m.icon} size={15} class="shrink-0 text-brand-500" />
+                            {m.name}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+              <a href="/car-service-prices/vw" class="mt-3 flex items-center justify-between rounded-2xl bg-ink px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-ink-700">
+                All 23 VW models
+                <ArrowRight size={18} class="arrow" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <a href="/services/electric-vehicle-conversions" class="link-underline whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink">EV Conversions</a>
+        <a href="/reviews" class="link-underline whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink">Reviews</a>
+        <a href="/promotions" class="link-underline whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink">Press</a>
+        <a href="/contact-us" class="link-underline whitespace-nowrap rounded-full px-2.5 py-2 text-[0.875rem] font-medium text-ink-700 transition-colors hover:text-ink">Contact</a>
+      </div>
+
+      <!-- Right zone -->
+      <div class="flex items-center gap-2">
+        <!-- Live status (2xl+) -->
+        <span data-open-status class="status-pill hidden border border-line bg-white/70 text-ink-700 2xl:inline-flex">
+          <span data-status-dot class="status-dot status-dot--open"></span>
+          <span data-status-text>Checking hours…</span>
+        </span>
+
+        <!-- Landline (lg+) -->
+        <a href={phone.href} class="hidden items-center gap-2 rounded-pill border border-line px-3.5 py-2 font-mono text-[0.85rem] font-medium text-ink transition-colors hover:border-brand-400 hover:text-brand-700 lg:inline-flex" aria-label={`Call ${phone.display}`}>
+          <Phone size={15} strokeWidth={2} class="text-brand-500" />
+          {phone.display}
+        </a>
+
+        <a href="/contact-us" class="btn btn-primary hidden px-5 py-2.5 text-sm sm:inline-flex">
+          Get a Quote
+          <ArrowRight size={17} class="arrow" />
+        </a>
+
+        <!-- Mobile toggle -->
+        <button id="navToggle" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-ink text-white transition-transform active:scale-95 xl:hidden" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+          <Menu size={22} />
+        </button>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile full-screen overlay -->
+<div id="mobileMenu" class="fixed inset-0 z-[120] hidden xl:hidden" role="dialog" aria-modal="true" aria-label="Menu">
+  <div id="mobileScrim" class="absolute inset-0 bg-ink/60 opacity-0 backdrop-blur-sm transition-opacity duration-300"></div>
+  <div id="mobilePanel" class="absolute inset-x-3 top-3 max-h-[94vh] origin-top translate-y-[-12px] overflow-y-auto rounded-4xl bg-cream p-5 opacity-0 shadow-glass-lg transition-all duration-300">
+    <div class="flex items-center justify-between">
+      <img src="/logo.png" alt="Jack's Garage" width="855" height="160" class="h-8 w-auto" />
+      <button id="navClose" type="button" class="inline-flex h-11 w-11 items-center justify-center rounded-full bg-surface text-ink transition-colors hover:bg-line" aria-label="Close menu">
+        <X size={22} />
+      </button>
+    </div>
+
+    <span data-open-status class="status-pill mt-4 inline-flex border border-line bg-surface text-ink-700">
+      <span data-status-dot class="status-dot status-dot--open"></span>
+      <span data-status-text>Checking hours…</span>
+    </span>
+
+    <nav class="mt-5 flex flex-col" aria-label="Mobile">
+      <a href="/" class="border-b border-line py-3 text-lg font-semibold text-ink">Home</a>
+      <a href="/about-us" class="border-b border-line py-3 text-lg font-semibold text-ink">About</a>
+
+      <details class="group border-b border-line py-1">
+        <summary class="flex cursor-pointer items-center justify-between py-2.5 text-lg font-semibold text-ink marker:content-none">
+          Services
+          <ChevronDown size={20} class="transition-transform group-open:rotate-180" />
+        </summary>
+        <div class="pb-2">
+          {servicesByCategory.map((group) => (
+            <div class="mb-1.5">
+              <p class="px-2 pt-2 font-mono text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-brand-700">{group.category}</p>
+              {group.items.map((s) => (
+                <a href={`/services/${s.slug}`} class="flex items-center gap-2.5 rounded-xl px-2 py-2 text-[0.95rem] text-ink-700 transition-colors hover:bg-brand-50">
+                  <Icon name={s.icon} size={17} class="text-brand-500" /> {s.name}
+                </a>
+              ))}
+            </div>
+          ))}
+          <a href="/services" class="inline-flex items-center gap-1.5 px-2 pt-1 text-sm font-semibold text-brand-700">All services <ArrowRight size={15} /></a>
+        </div>
+      </details>
+
+      <details class="group border-b border-line py-1">
+        <summary class="flex cursor-pointer items-center justify-between py-2.5 text-lg font-semibold text-ink marker:content-none">
+          VW Servicing
+          <ChevronDown size={20} class="transition-transform group-open:rotate-180" />
+        </summary>
+        <div class="pb-2">
+          {modelsByEra.map((group) => (
+            <div class="mb-1.5">
+              <p class="px-2 pt-2 font-mono text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-brand-700">{group.label}</p>
+              {group.items.map((m) => (
+                <a href={`/car-service-prices/vw/${m.slug}`} class="flex items-center gap-2.5 rounded-xl px-2 py-2 text-[0.95rem] text-ink-700 transition-colors hover:bg-brand-50">
+                  <Icon name={m.icon} size={17} class="text-brand-500" /> {m.name}
+                </a>
+              ))}
+            </div>
+          ))}
+          <a href="/car-service-prices/vw" class="inline-flex items-center gap-1.5 px-2 pt-1 text-sm font-semibold text-brand-700">All VW models <ArrowRight size={15} /></a>
+        </div>
+      </details>
+
+      <a href="/services/electric-vehicle-conversions" class="border-b border-line py-3 text-lg font-semibold text-ink">EV Conversions</a>
+      <a href="/reviews" class="border-b border-line py-3 text-lg font-semibold text-ink">Reviews</a>
+      <a href="/promotions" class="border-b border-line py-3 text-lg font-semibold text-ink">In the Press</a>
+      <a href="/fun-stuff" class="border-b border-line py-3 text-lg font-semibold text-ink">Fun Stuff</a>
+      <a href="/links" class="border-b border-line py-3 text-lg font-semibold text-ink">Links</a>
+      <a href="/contact-us" class="border-b border-line py-3 text-lg font-semibold text-ink">Contact</a>
+    </nav>
+
+    <div class="mt-5 grid grid-cols-1 gap-2">
+      <a href={phone.href} class="flex items-center justify-between rounded-2xl bg-ink px-4 py-3.5 text-white"><span class="flex items-center gap-2"><Phone size={18} class="text-brand-300" /> Call us</span><span class="font-mono text-sm">{phone.display}</span></a>
+      <a href="/contact-us" class="btn btn-primary py-3.5">Get a Quote <ArrowRight size={18} class="arrow" /></a>
+    </div>
+    <p class="mt-4 text-center text-xs text-muted">Mon-Fri 8:00-18:00 · Sat &amp; Sun Closed</p>
+  </div>
+</div>
+
+<style>
+  #siteNav #navPad { transition: padding 0.35s var(--ease-out); }
+  #siteNav[data-scrolled='true'] #navPad { padding-top: 0.5rem; }
+  @media (min-width: 768px) { #siteNav[data-scrolled='true'] #navPad { padding-top: 0.625rem; } }
+  #siteNav #navPill { transition: padding 0.35s var(--ease-out), box-shadow 0.35s ease, background-color 0.35s ease; }
+  #siteNav[data-scrolled='true'] #navPill { padding-top: 0.5rem; padding-bottom: 0.5rem; box-shadow: 0 10px 34px rgba(26, 26, 26, 0.16); }
+</style>
+
+<script>
+  // ── Scroll-shrink ──────────────────────────────────────────────
+  const header = document.getElementById('siteNav');
+  const onScroll = () => header?.setAttribute('data-scrolled', String(window.scrollY > 16));
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ── Mobile menu ────────────────────────────────────────────────
+  const menu = document.getElementById('mobileMenu');
+  const panel = document.getElementById('mobilePanel');
+  const scrim = document.getElementById('mobileScrim');
+  const toggle = document.getElementById('navToggle');
+  const closeBtn = document.getElementById('navClose');
+  const open = () => {
+    if (!menu) return;
+    menu.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+    toggle?.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => {
+      scrim?.classList.replace('opacity-0', 'opacity-100');
+      panel?.classList.remove('opacity-0');
+      panel && (panel.style.transform = 'translateY(0)');
+    });
+  };
+  const close = () => {
+    if (!menu) return;
+    scrim?.classList.replace('opacity-100', 'opacity-0');
+    panel?.classList.add('opacity-0');
+    panel && (panel.style.transform = 'translateY(-12px)');
+    toggle?.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    setTimeout(() => menu.classList.add('hidden'), 300);
+  };
+  toggle?.addEventListener('click', open);
+  closeBtn?.addEventListener('click', close);
+  scrim?.addEventListener('click', close);
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu?.classList.contains('hidden')) close(); });
+
+  // ── Live opening-hours status (Europe/London) ──────────────────
+  // Mon–Fri 08:00–18:00; Sat & Sun closed.
+  const WEEK = { open: 480, close: 1080 };  // 08:00 – 18:00
+  const names = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  const isWeekday = (d: number) => d >= 1 && d <= 5;
+  const fmtTime = (m: number) => {
+    let h = Math.floor(m / 60); const mm = m % 60;
+    const ap = h >= 12 ? 'pm' : 'am'; const h12 = ((h + 11) % 12) + 1;
+    return mm ? `${h12}:${String(mm).padStart(2, '0')}${ap}` : `${h12}${ap}`;
+  };
+  function nextOpenLabel(dow: number) {
+    for (let i = 1; i <= 7; i++) {
+      const d = (dow + i) % 7;
+      if (isWeekday(d)) return i === 1 ? 'tomorrow' : names[d];
+    }
+    return 'Monday';
+  }
+  function updateStatus() {
+    const parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/London', weekday: 'long', hour: '2-digit', minute: '2-digit', hour12: false,
+    }).formatToParts(new Date());
+    const get = (t: string) => parts.find((p) => p.type === t)?.value ?? '';
+    const dow = names.indexOf(get('weekday'));
+    let hh = parseInt(get('hour'), 10); if (hh === 24) hh = 0;
+    const mins = hh * 60 + parseInt(get('minute'), 10);
+
+    let text = '', isOpen = false;
+    if (isWeekday(dow) && mins >= WEEK.open && mins < WEEK.close) {
+      isOpen = true;
+      text = `Open now · Closes ${fmtTime(WEEK.close)}`;
+    } else if (isWeekday(dow) && mins < WEEK.open) {
+      text = `Closed · Opens ${fmtTime(WEEK.open)}`;
+    } else {
+      text = `Closed · Opens ${nextOpenLabel(dow)} ${fmtTime(WEEK.open)}`;
+    }
+    document.querySelectorAll('[data-open-status]').forEach((el) => {
+      const dot = el.querySelector('[data-status-dot]');
+      const txt = el.querySelector('[data-status-text]');
+      if (txt) txt.textContent = text;
+      if (dot) { dot.classList.toggle('status-dot--open', isOpen); dot.classList.toggle('status-dot--closed', !isOpen); }
+      el.setAttribute('aria-label', text);
+    });
+  }
+  updateStatus();
+  setInterval(updateStatus, 60000);
+</script>

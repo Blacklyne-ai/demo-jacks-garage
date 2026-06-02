@@ -1,0 +1,48 @@
+---
+import Icon from './Icon.astro';
+import { stats } from '../data/site';
+interface Props { dark?: boolean }
+const { dark = false } = Astro.props;
+---
+<div class="grid grid-cols-2 gap-px overflow-hidden rounded-3xl border lg:grid-cols-4"
+     class:list={[dark ? 'border-white/10 bg-white/10' : 'border-line bg-line']}>
+  {stats.map((s, i) => (
+    <div class:list={['reveal flex flex-col gap-3 p-7 md:p-9', dark ? 'bg-ink-900' : 'bg-white']} style={`--reveal-delay:${i * 80}ms`}>
+      <span class:list={[dark ? 'icon-tile-dark' : 'icon-tile', 'h-11 w-11']}><Icon name={s.icon} size={20} /></span>
+      {('to' in s) ? (
+        <span class="stat-num" class:list={[dark && 'text-white']}>
+          <span class="counter" data-count-to={s.to} data-suffix={s.suffix}>0{s.suffix}</span>
+        </span>
+      ) : (
+        <span class="stat-num" class:list={[dark && 'text-white']}>{(s as any).text}</span>
+      )}
+      <span class:list={['text-sm font-medium', dark ? 'text-white/55' : 'text-muted']}>{s.label}</span>
+    </div>
+  ))}
+</div>
+
+<script>
+  const counters = document.querySelectorAll<HTMLElement>('.counter');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const run = (el: HTMLElement) => {
+    const to = Number(el.dataset.countTo || '0');
+    const suffix = el.dataset.suffix || '';
+    if (reduced) { el.textContent = `${to}${suffix}`; return; }
+    const dur = 1600; const start = performance.now();
+    const tick = (now: number) => {
+      const p = Math.min((now - start) / dur, 1);
+      const eased = 1 - Math.pow(1 - p, 3); // easeOutCubic
+      el.textContent = `${Math.round(to * eased)}${suffix}`;
+      if (p < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  if ('IntersectionObserver' in window && !reduced) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => { if (e.isIntersecting) { run(e.target as HTMLElement); io.unobserve(e.target); } });
+    }, { threshold: 0.4 });
+    counters.forEach((c) => io.observe(c));
+  } else {
+    counters.forEach(run);
+  }
+</script>

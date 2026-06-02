@@ -1,0 +1,326 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import TrustStrip from '../components/TrustStrip.astro';
+import StatsCounter from '../components/StatsCounter.astro';
+import QuickActions from '../components/QuickActions.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import OpeningHours from '../components/OpeningHours.astro';
+import { Phone, ArrowRight, ArrowUpRight, Play, Navigation, MapPin } from '@lucide/astro';
+import { site, mapsLink } from '../data/site';
+import { featuredServices } from '../data/services';
+import { modelsByEra } from '../data/models';
+import { press } from '../data/press';
+
+const pillars = [
+  { title: 'VW Repairs & Services', text: 'VW Repairs & Services at Jack\'s Garage in London - mechanical, electrical and bodywork, on every era of Volkswagen.', href: '/services', cta: 'All Services', icon: 'Wrench', image: '/images/workshop/ws-03.jpg' },
+  { title: 'VW Servicing', text: 'VW Servicing at Jack\'s Garage in London - 23 models covered, from the Beetle to the ID.5, warranty safe.', href: '/car-service-prices/vw', cta: 'VW Servicing', icon: 'Settings', image: '/images/workshop/ws-11.jpg' },
+  { title: 'Electric Vehicle Conversions', text: 'Electric Vehicle Conversions at Jack\'s Garage in London - future-proof your classic VW as the UK distributor of eClassics kits.', href: '/services/electric-vehicle-conversions', cta: 'Read More', icon: 'Zap', image: '/images/ev/ev-01.jpg' },
+];
+
+// 6 featured quick-links: the 5 featured services + the VW Servicing hub.
+const quickLinks = [
+  ...featuredServices.map((s) => ({ name: s.name, tagline: s.tagline, icon: s.icon, href: `/services/${s.slug}` })),
+  { name: 'VW Servicing', tagline: 'Servicing for all 23 VW models, grouped by era', icon: 'Car', href: '/car-service-prices/vw' },
+];
+const desc = 'Call 020 7243 8926 for Classic VW, Bodywork & EV Conversion Services in London from Jack\'s Garage.';
+---
+<Layout
+  title="Classic VW, Bodywork & EV Conversion Services in London from Jack's Garage - 020 7243 8926"
+  description={desc}
+  path="/"
+>
+  <!-- ───────────────────────── HERO ───────────────────────── -->
+  <section class="relative flex min-h-[92vh] items-end overflow-hidden">
+    <img src="/images/jg/hero-1.jpg" alt="A classic yellow VW Beetle convertible in the Jack's Garage workshop, with a red Beetle alongside" class="absolute inset-0 h-full w-full animate-ken-burns object-cover object-center" width="1920" height="960" fetchpriority="high" />
+    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-r from-ink-950 via-ink-950/75 to-ink-950/10"></div>
+    <div aria-hidden="true" class="absolute inset-0 bg-gradient-to-t from-ink-950 via-transparent to-ink-950/30"></div>
+
+    <div class="container-jg relative w-full pb-16 pt-36 md:pb-24">
+      <div class="max-w-3xl">
+        <span class="eyebrow eyebrow-on-dark animate-fade-in">Classic VW Specialists · Ladbroke Grove W10 · Since 1995</span>
+        <h1 class="mt-5 text-d1 text-white animate-fade-up" style="animation-delay:.08s">
+          Jack's Garage are <span class="script-accent text-gold-400">Classic VW specialists</span> in London
+        </h1>
+        <p class="mt-6 max-w-2xl text-body-xl text-white/85 animate-fade-up" style="animation-delay:.16s">
+          Jack's Garage is the destination for the highest quality mechanical and bodywork repairs for your beloved Volkswagen as well as VW electric vehicle conversions.
+        </p>
+        <div class="mt-9 flex flex-wrap items-center gap-3 animate-fade-up" style="animation-delay:.24s">
+          <a href="/contact-us" class="btn btn-primary btn-lg">Get a Quote <ArrowRight size={18} class="arrow" /></a>
+          <a href={site.phone.href} class="btn btn-ghost-light btn-lg"><Phone size={18} /> {site.phone.display}</a>
+          <button type="button" data-video-open class="btn btn-ghost-light btn-lg">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-brand-500 text-white"><Play size={13} fill="currentColor" /></span>
+            Watch the workshop film
+          </button>
+        </div>
+        <div class="mt-10 animate-fade-up" style="animation-delay:.32s">
+          <TrustStrip dark class="gap-2" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Press marquee strip (infinite, edge-faded) -->
+  <section class="overflow-hidden border-y border-line bg-cream-200 py-5">
+    <div class="container-jg flex items-center gap-6">
+      <p class="shrink-0 font-mono text-[0.72rem] font-semibold uppercase tracking-[0.16em] text-brand-700">As featured in</p>
+      <div class="relative flex-1 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_6%,#000_94%,transparent)]">
+        <ul class="flex w-max items-center gap-12 animate-marquee">
+          {[...press, ...press].map((p) => (
+            <li class="flex shrink-0 items-center gap-2.5 text-[0.9rem] font-bold uppercase tracking-wide text-ink-600/75">
+              <span class="h-1.5 w-1.5 rounded-full bg-brand-400"></span>
+              {p.magazine.replace(' Magazine', '')}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── 3 PRIMARY PILLARS ──────────────── -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading
+        eyebrow="What we do"
+        title="Three ways we look after your Volkswagen"
+        intro="From a Splitscreen Bus to an ID.5, every VW that rolls through our doors gets the same specialist care - and we are pioneering where the marque is heading next."
+      />
+      <div class="mt-14 grid gap-6 lg:grid-cols-3">
+        {pillars.map((p, i) => (
+          <a href={p.href} class="service-card reveal group" style={`--reveal-delay:${i * 90}ms`}>
+            <div class="relative aspect-[16/11] overflow-hidden">
+              <img src={p.image} alt={p.title} width="760" height="520" loading="lazy" decoding="async" class="service-card__img h-full w-full object-cover transition-transform duration-700" />
+              <div class="absolute inset-0 bg-gradient-to-t from-ink-950/80 via-ink-950/15 to-transparent"></div>
+              <span class="absolute left-4 top-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-white/92 text-brand-600 shadow-glass backdrop-blur"><Icon name={p.icon} size={22} /></span>
+              <h3 class="absolute inset-x-5 bottom-4 text-h2 font-bold text-white">{p.title}</h3>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <p class="flex-1 text-[0.95rem] leading-relaxed text-muted">{p.text}</p>
+              <span class="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-ink">
+                {p.cta}
+                <span class="service-card__arrow inline-flex h-7 w-7 items-center justify-center rounded-full bg-brand-50 text-brand-600 transition-all duration-300"><ArrowUpRight size={16} strokeWidth={2.2} /></span>
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── 6 FEATURED QUICK-LINKS ──────────────── -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading align="left" eyebrow="Popular at Jack's Garage" title="Featured services" class="max-w-2xl" />
+      <div class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        {quickLinks.map((q, i) => (
+          <a href={q.href} class="group reveal flex items-start gap-4 rounded-3xl border border-line bg-white p-6 shadow-card transition-all duration-500 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover" style={`--reveal-delay:${(i % 3) * 80}ms`}>
+            <span class="icon-tile shrink-0 transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white"><Icon name={q.icon} size={24} /></span>
+            <span class="min-w-0">
+              <span class="flex items-center gap-1.5 text-h3 font-bold text-ink">{q.name}<ArrowRight size={16} class="text-muted opacity-0 transition-all duration-300 group-hover:translate-x-0.5 group-hover:text-brand-600 group-hover:opacity-100" /></span>
+              <span class="mt-1.5 block text-[0.9rem] leading-relaxed text-muted">{q.tagline}</span>
+            </span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── ABOUT TEASER ──────────────── -->
+  <section class="section">
+    <div class="container-jg grid items-center gap-12 lg:grid-cols-2">
+      <div class="reveal relative">
+        <div aria-hidden="true" class="absolute -inset-3 -z-10 rounded-[2.25rem] bg-orange-grad opacity-10 blur-2xl"></div>
+        <img src="/images/jg/about-story.jpg" alt="The Jack's Garage owner in the workshop in front of a classic VW Bus" width="1100" height="619" loading="lazy" class="aspect-[16/10] w-full rounded-3xl border border-line object-cover shadow-glass-lg" />
+        <div class="absolute -bottom-6 -right-4 hidden rounded-2xl bg-ink-950 px-6 py-5 text-white shadow-glass-lg sm:block">
+          <p class="font-mono text-3xl font-semibold text-gold-400">30+</p>
+          <p class="text-xs text-white/70">years in W10</p>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow reveal">A family business</span>
+        <h2 class="reveal mt-4 text-d3 text-ink" style="--reveal-delay:60ms">We love VWs - and it shows</h2>
+        <p class="reveal mt-6 text-body-xl leading-relaxed text-ink-700" style="--reveal-delay:120ms">
+          We are a well-established family business and we've been operating in Ladbroke Grove W10, since 1995. Our success is down to the highly skilled team of VW experts who man the workshops and the fact that we love VWs and will bend over backwards to help our customers.
+        </p>
+        <div class="reveal mt-8 flex flex-wrap gap-3" style="--reveal-delay:180ms">
+          <a href="/about-us" class="btn btn-primary btn-lg">More About Us <ArrowRight size={18} class="arrow" /></a>
+          <a href="/reviews" class="btn btn-outline btn-lg">Reviews</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── STATS ──────────────── -->
+  <section class="section pt-0">
+    <div class="container-jg">
+      <StatsCounter />
+    </div>
+  </section>
+
+  <!-- ──────────────── EV CONVERSIONS FEATURE (dark, cinematic) ──────────────── -->
+  <section class="relative overflow-hidden bg-ink-950 text-white">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-mesh-ink opacity-90"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-[0.05] [background-size:44px_44px]"></div>
+    <div class="container-jg relative grid items-center gap-12 py-20 md:py-28 lg:grid-cols-2">
+      <div class="reveal">
+        <span class="eyebrow eyebrow-on-dark">The future of classic VWs</span>
+        <h2 class="mt-4 text-d2 text-white">Drive the icon. <span class="script-accent text-gold-400">Lose the petrol.</span></h2>
+        <p class="mt-5 max-w-xl text-body-xl text-white/75">As the UK distributor of eClassics' conversion kits, we turn beloved Beetles, Buses and Type 3s into silent, zero-emission EVs - using Volkswagen's own latest components, with all their classic character intact.</p>
+        <ul class="mt-7 flex flex-wrap gap-2.5">
+          {['Genuine VW components', '1-6 week builds', 'From under £50k', 'ULEZ-friendly'].map((c) => (
+            <li class="inline-flex items-center gap-2 rounded-pill border border-white/15 bg-white/[0.06] px-4 py-2 text-sm font-medium text-white/85 backdrop-blur"><span class="h-1.5 w-1.5 rounded-full bg-brand-400"></span>{c}</li>
+          ))}
+        </ul>
+        <div class="mt-8 flex flex-wrap gap-3">
+          <a href="/services/electric-vehicle-conversions" class="btn btn-primary btn-lg">Explore EV Conversions <ArrowRight size={18} class="arrow" /></a>
+          <a href="/electric-vehicle-conversion-enquiry" class="btn btn-ghost-light btn-lg">Start an enquiry</a>
+        </div>
+      </div>
+      <div class="reveal relative" style="--reveal-delay:120ms">
+        <div aria-hidden="true" class="absolute -inset-4 -z-10 rounded-[2.5rem] bg-brand-500/20 blur-3xl"></div>
+        <img src="/images/ev/ev-01.jpg" alt="The eClassics eBasis electric base-chassis for classic Volkswagens" width="900" height="600" loading="lazy" class="w-full rounded-3xl border border-white/10 object-cover shadow-glass-lg" />
+        <div class="absolute -bottom-5 -left-4 hidden rounded-2xl border border-white/10 bg-ink-900/90 px-5 py-4 backdrop-blur sm:block">
+          <p class="font-mono text-2xl font-semibold text-gold-400">e-Käfer</p>
+          <p class="text-xs text-white/60">the electric Beetle</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── QUICK ACTIONS ──────────────── -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading eyebrow="Get started" title="Quick actions" intro="Check your MOT in seconds, or send us a no-obligation enquiry for a conversion, bodywork or a service." />
+      <div class="mt-12"><QuickActions /></div>
+    </div>
+  </section>
+
+  <!-- ──────────────── IN THE PRESS ──────────────── -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading eyebrow="In the Press" title="Featured in six motoring magazines" intro="Our pioneering classic-VW EV conversions caught the eye of the motoring press in early 2020. Here's where you'll find us in print." />
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {press.map((p, i) => (
+          <a href={`/promotions/${p.slug}`} class="service-card reveal group" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+            <div class="relative aspect-[3/2] overflow-hidden bg-cream-300">
+              <img src={p.cover} alt={`${p.magazine}, ${p.edition}`} width="400" height="267" loading="lazy" class="service-card__img h-full w-full object-cover transition-transform duration-700" />
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <div class="flex items-center gap-2">
+                <span class="inline-flex items-center gap-1.5 rounded-pill bg-brand-50 px-2.5 py-1 font-mono text-[0.68rem] font-semibold uppercase tracking-wide text-brand-700">{p.edition}</span>
+              </div>
+              <h3 class="mt-3 text-h3 font-bold text-ink">{p.magazine}</h3>
+              <p class="mt-2 line-clamp-3 flex-1 text-[0.9rem] leading-relaxed text-muted">{p.excerpt}</p>
+              <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">Read more <ArrowRight size={15} class="arrow" /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── GOOGLE REVIEWS ──────────────── -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading eyebrow="Reviews" title="What our customers think" intro="Thirty years of trust, built one Volkswagen at a time." />
+      <div class="mt-12"><ReviewsSection /></div>
+    </div>
+  </section>
+
+  <!-- ──────────────── VW MODELS COVERAGE ──────────────── -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading eyebrow="VW Servicing" title="23 VW models, classic to electric" intro="From 1950s Splitscreen Buses to the latest ID.5, we service every era of Volkswagen. Choose your model for servicing details." />
+      <div class="mt-14 space-y-10">
+        {modelsByEra.map((group) => (
+          <div class="reveal">
+            <div class="mb-5 flex items-center gap-3">
+              <h3 class="text-h3 font-bold text-ink">{group.label}</h3>
+              <span class="h-px flex-1 bg-line"></span>
+              <span class="font-mono text-xs text-muted">{group.items.length} models</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {group.items.map((m) => (
+                <a href={`/car-service-prices/vw/${m.slug}`} class="group flex items-center gap-3 rounded-2xl border border-line bg-white p-4 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card-hover">
+                  <span class="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-cream-200 text-brand-600 transition-colors group-hover:bg-brand-500 group-hover:text-white"><Icon name={m.icon} size={19} /></span>
+                  <span class="min-w-0">
+                    <span class="block truncate text-[0.95rem] font-bold text-ink">{m.name}</span>
+                    <span class="block truncate text-xs text-muted">{m.short} servicing</span>
+                  </span>
+                </a>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="reveal mt-12 text-center">
+        <a href="/car-service-prices/vw" class="btn btn-outline btn-lg">View all VW servicing <ArrowRight size={17} class="arrow" /></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────── FIND US ──────────────── -->
+  <section class="section bg-ink-950 text-white">
+    <div class="container-jg grid items-stretch gap-10 lg:grid-cols-2">
+      <div>
+        <span class="eyebrow eyebrow-on-dark reveal">Find us here</span>
+        <h2 class="reveal mt-4 text-d3 text-white" style="--reveal-delay:60ms">In the heart of Ladbroke Grove, W10</h2>
+        <p class="reveal mt-5 text-body-xl text-white/70" style="--reveal-delay:120ms">
+          Pop in, give us a call, or send an enquiry. You'll find us just off Ladbroke Grove - the home of London's Classic VW specialists since 1995.
+        </p>
+        <ul class="reveal mt-8 space-y-4 text-[1.05rem]" style="--reveal-delay:160ms">
+          <li class="flex gap-3"><MapPin size={20} class="mt-0.5 shrink-0 text-brand-400" /><span class="text-white/85">{site.address.line1}, {site.address.city} {site.address.postcode}</span></li>
+          <li class="flex gap-3"><Phone size={20} class="mt-0.5 shrink-0 text-brand-400" /><a href={site.phone.href} class="font-mono text-white transition-colors hover:text-brand-300">{site.phone.display}</a></li>
+        </ul>
+        <div class="reveal mt-8 flex flex-wrap gap-3" style="--reveal-delay:200ms">
+          <a href={mapsLink} target="_blank" rel="noopener" class="btn btn-primary btn-lg"><Navigation size={17} /> Get directions</a>
+          <a href="/contact-us" class="btn btn-ghost-light btn-lg">Contact us <ArrowRight size={16} class="arrow" /></a>
+        </div>
+      </div>
+      <div class="reveal grid gap-5" style="--reveal-delay:120ms">
+        <MapEmbed class="min-h-[260px] flex-1" />
+        <OpeningHours />
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+
+  <!-- ──────────────── YouTube video lightbox ──────────────── -->
+  <div id="videoModal" class="fixed inset-0 z-[160] hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-label="Jack's Garage workshop film">
+    <div data-video-close class="absolute inset-0 bg-ink-950/85 backdrop-blur-sm"></div>
+    <div class="relative w-full max-w-4xl">
+      <button type="button" data-video-close class="absolute -top-11 right-0 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20" aria-label="Close video">
+        <Icon name="X" size={22} />
+      </button>
+      <div class="aspect-video overflow-hidden rounded-2xl bg-black shadow-glass-lg">
+        <div id="videoFrame" class="h-full w-full"></div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  const modal = document.getElementById('videoModal');
+  const frame = document.getElementById('videoFrame');
+  const open = () => {
+    if (!modal || !frame) return;
+    frame.innerHTML = '<iframe width="100%" height="100%" src="https://www.youtube.com/embed/IqyW021Z9Nw?rel=0&autoplay=1" title="Jack\'s Garage Car Mechanic in London: Auto Body Repair and VW Service" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>';
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  };
+  const close = () => {
+    if (!modal || !frame) return;
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    frame.innerHTML = '';
+    document.body.style.overflow = '';
+  };
+  document.querySelectorAll('[data-video-open]').forEach((b) => b.addEventListener('click', open));
+  document.querySelectorAll('[data-video-close]').forEach((b) => b.addEventListener('click', close));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+</script>

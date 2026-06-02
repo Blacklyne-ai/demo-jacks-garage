@@ -1,0 +1,40 @@
+---
+// Central Lucide icon resolver — lets the data layer reference icons by name.
+// Usage: <Icon name="Wrench" class="h-6 w-6" /> · default stroke 1.75, 24px.
+// NOTE: brand icons (Facebook) are NOT in @lucide/astro — they are inline SVG.
+import {
+  Disc, Disc3, Hammer, FileCheck, ShieldCheck, Gauge, Wrench, Settings, Cog,
+  Calendar, Car, BusFront, Truck, CheckCircle2, Key,
+  Users, Award, BadgeCheck, PoundSterling,
+  CalendarClock, CalendarCheck, MapPin, HeartHandshake,
+  Phone, Clock, Mail, MessageCircle, Star, Check, ArrowRight, ArrowUpRight,
+  Menu, X, ChevronDown, ChevronRight, ChevronLeft, Quote, Navigation, Send, Sparkles,
+  Plus, Minus, HelpCircle, Route, Headset,
+  Battery, BatteryCharging, Cable, Wind, LifeBuoy, ArrowDownUp,
+  CircleDot, Crosshair, PlugZap, Zap, ExternalLink, Newspaper, Camera, Play, Leaf,
+} from '@lucide/astro';
+
+const map: Record<string, any> = {
+  Disc, Disc3, Hammer, FileCheck, ShieldCheck, Gauge, Wrench, Settings, Cog,
+  Calendar, Car, BusFront, Truck, CheckCircle2, Key,
+  Users, Award, BadgeCheck, PoundSterling,
+  CalendarClock, CalendarCheck, MapPin, HeartHandshake,
+  Phone, Clock, Mail, MessageCircle, Star, Check, ArrowRight, ArrowUpRight,
+  Menu, X, ChevronDown, ChevronRight, ChevronLeft, Quote, Navigation, Send, Sparkles,
+  Plus, Minus, HelpCircle, Route, Headset,
+  Battery, BatteryCharging, Cable, Wind, LifeBuoy, ArrowDownUp,
+  CircleDot, Crosshair, PlugZap, Zap, ExternalLink, Newspaper, Camera, Play, Leaf,
+};
+
+interface Props {
+  name: string;
+  class?: string;
+  size?: number;
+  strokeWidth?: number;
+  [key: string]: any;
+}
+
+const { name, size = 24, strokeWidth = 1.75, ...rest } = Astro.props;
+const Cmp = map[name] ?? HelpCircle;
+---
+<Cmp size={size} strokeWidth={strokeWidth} {...rest} />

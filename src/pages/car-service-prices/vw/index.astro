@@ -1,0 +1,101 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import PageHero from '../../../components/PageHero.astro';
+import CtaBand from '../../../components/CtaBand.astro';
+import SectionHeading from '../../../components/SectionHeading.astro';
+import Icon from '../../../components/Icon.astro';
+import { Phone, ArrowRight, Check, BadgeCheck } from '@lucide/astro';
+import { site } from '../../../data/site';
+import { modelsByEra, PETROL_TIERS, WARRANTY_BLOCK, HERO_STRAPLINE } from '../../../data/models';
+---
+<Layout
+  title="VW Servicing in London - Jack's Garage | 23 VW Models, Warranty Safe"
+  description="Independent VW servicing in Ladbroke Grove, London W10 for 23 models from the Beetle to the ID.5. Warranty safe since 1995. Oil, Engine & Full services. Call 020 7243 8926."
+  path="/car-service-prices/vw"
+  image="/images/workshop/ws-11.jpg"
+>
+  <PageHero
+    eyebrow="VW Servicing"
+    title="Servicing for every Volkswagen we know and love"
+    subtitle={`${HERO_STRAPLINE}. Choose your model below for servicing details - from classic air-cooled Beetles to the latest electric ID range.`}
+    image="/images/workshop/ws-11.jpg"
+    imageAlt="VW servicing at Jack's Garage"
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'VW Servicing' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href="/service-enquiry" class="btn btn-outline btn-lg">Service Enquiry <ArrowRight size={16} class="arrow" /></a>
+  </PageHero>
+
+  <!-- Models by era -->
+  <div class="section space-y-16">
+    {modelsByEra.map((group) => (
+      <section class="container-jg">
+        <div class="mb-3 flex items-center gap-3">
+          <h2 class="text-h2 font-bold text-ink">{group.label}</h2>
+          <span class="h-px flex-1 bg-line"></span>
+          <span class="font-mono text-xs text-muted">{group.items.length} models</span>
+        </div>
+        <p class="mb-7 max-w-3xl text-[0.95rem] leading-relaxed text-muted">{group.context}</p>
+        <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {group.items.map((m) => (
+            <a href={`/car-service-prices/vw/${m.slug}`} class="service-card reveal group">
+              <div class="relative aspect-[16/10] overflow-hidden">
+                {m.image ? (
+                  <img src={m.image} alt={m.name} width="420" height="263" loading="lazy" class="service-card__img h-full w-full object-cover transition-transform duration-700" />
+                ) : (
+                  <div class="flex h-full w-full items-center justify-center bg-gradient-to-br from-cream-300 to-cream-200">
+                    <Icon name={m.icon} size={46} class="text-brand-500/50 transition-transform duration-500 group-hover:scale-110" />
+                  </div>
+                )}
+                <span class="absolute left-3 top-3 inline-flex h-9 w-9 items-center justify-center rounded-xl bg-white/92 text-brand-600 shadow-glass backdrop-blur"><Icon name={m.icon} size={17} /></span>
+              </div>
+              <div class="flex flex-1 flex-col p-5">
+                <h3 class="text-h3 font-bold text-ink">{m.name}</h3>
+                <p class="mt-1.5 flex-1 text-[0.85rem] leading-relaxed text-muted">{m.blurb}</p>
+                <span class="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">Servicing <ArrowRight size={14} class="arrow" /></span>
+              </div>
+            </a>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+
+  <!-- Service tiers explainer -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading eyebrow="How servicing works" title="Three levels of service" intro="We have different levels of servicing available, and we'll come up with the best option depending on your VW's history and mileage. All servicing is priced on application." />
+      <div class="mt-14 grid gap-6 lg:grid-cols-3">
+        {PETROL_TIERS.map((t, i) => (
+          <div class="reveal flex flex-col rounded-3xl border border-line bg-white p-7 shadow-card" style={`--reveal-delay:${i * 90}ms`}>
+            <div class="flex items-center justify-between">
+              <h3 class="text-h2 font-bold text-ink">{t.name}</h3>
+              <span class="font-mono text-sm font-semibold text-brand-600">POA</span>
+            </div>
+            <ul class="mt-5 flex-1 space-y-2.5">
+              {t.includes.map((item) => (
+                <li class="flex items-start gap-2.5 text-[0.9rem] leading-relaxed text-ink-700">
+                  <span class="mt-0.5 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600"><Check size={12} strokeWidth={3} /></span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Warranty block -->
+  <section class="section">
+    <div class="container-jg">
+      <div class="mx-auto flex max-w-3xl flex-col items-center gap-5 rounded-4xl border border-line bg-white p-8 text-center shadow-card md:p-12">
+        <span class="icon-tile h-14 w-14"><BadgeCheck size={26} /></span>
+        <h2 class="text-d3 text-ink">{WARRANTY_BLOCK.heading}</h2>
+        <p class="text-body-xl leading-relaxed text-muted">{WARRANTY_BLOCK.text}</p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Book your VW in for a service" />
+</Layout>

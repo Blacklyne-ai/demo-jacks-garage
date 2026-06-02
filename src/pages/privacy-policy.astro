@@ -1,0 +1,216 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { Phone, ArrowUpRight } from '@lucide/astro';
+import FacebookIcon from '../components/FacebookIcon.astro';
+import { site } from '../data/site';
+
+const lastUpdated = 'May 2026';
+---
+<Layout
+  title="Privacy Policy - Jack's Garage | Classic VW Specialists London W10"
+  description="How Jack's Garage in Ladbroke Grove, London W10 collects, uses and protects your personal data under UK GDPR, and how to exercise your data rights."
+  path="/privacy-policy"
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Privacy Policy"
+    subtitle="How Jack's Garage handles your personal data."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Privacy Policy' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href="/contact-us" class="btn btn-outline btn-lg">Contact us <ArrowUpRight size={16} class="arrow" /></a>
+  </PageHero>
+
+  <section class="section">
+    <div class="container-jg">
+      <div class="prose-jg mx-auto max-w-3xl">
+        <p class="reveal text-muted">
+          This Privacy Policy explains how <strong>Jack's Garage</strong> ("we", "us", "our") collects, uses and
+          protects the personal data you share with us, and the rights you have under the UK General Data Protection
+          Regulation (UK GDPR) and the Data Protection Act 2018. We are committed to keeping the limited information
+          we hold about you safe and to being clear about how we use it.
+        </p>
+
+        <h2 class="reveal">Who we are</h2>
+        <p>
+          Jack's Garage is a family-run Classic VW specialist based in Ladbroke Grove, West London. For the purposes
+          of UK data protection law, we are the <strong>data controller</strong> responsible for your personal data.
+          You can reach us at:
+        </p>
+        <ul>
+          <li><strong>Jack's Garage</strong></li>
+          <li>{site.address.line1}, {site.address.city} {site.address.postcode}</li>
+          <li>Telephone: <a href={site.phone.href}>{site.phone.display}</a> (Monday to Friday, 8am to 6pm)</li>
+          <li>Facebook: <a href={site.facebook} target="_blank" rel="noopener">facebook.com/JacksGarageW10</a></li>
+        </ul>
+        <p>
+          We do not operate a public email address. The quickest way to reach us is by phone, through our on-site
+          enquiry forms, or via our Facebook page.
+        </p>
+
+        <h2 class="reveal">What information we collect</h2>
+        <p>
+          We only collect the information we genuinely need to answer your enquiry and to look after your vehicle.
+          Depending on how you contact us, this may include:
+        </p>
+        <ul>
+          <li>
+            <strong>Information you give us through an enquiry or contact form</strong> - your name, email address,
+            telephone number, vehicle details (such as registration, make and model) and the content of any message
+            you send us.
+          </li>
+          <li>
+            <strong>Information you give us by phone, in person or on Facebook</strong> - the details you choose to
+            share with us so that we can advise you, provide a quote or carry out work on your vehicle.
+          </li>
+          <li>
+            <strong>Technical and cookie data</strong> - basic information collected automatically when you browse
+            this website, such as your IP address, browser type and how you use the site. For more on this, please
+            see our <a href="/cookie-policy">Cookie Policy</a>.
+          </li>
+        </ul>
+        <p>
+          We do not knowingly collect any special category data and we ask that you do not send us sensitive personal
+          information through our forms.
+        </p>
+
+        <h2 class="reveal">How we use your information and our lawful bases</h2>
+        <p>
+          We use your personal data only for clear and limited purposes, and always rely on a lawful basis under the
+          UK GDPR:
+        </p>
+        <ul>
+          <li>
+            <strong>To respond to your enquiry</strong> and provide you with information, advice or a quote. When you
+            submit an enquiry form, we rely on your <strong>consent</strong>, which you give by ticking the consent
+            box, and on our <strong>legitimate interests</strong> in answering your message.
+          </li>
+          <li>
+            <strong>To provide our services</strong> - booking your vehicle in, carrying out servicing, MOTs,
+            bodywork, repairs or EV conversions, and keeping you updated on the work. Where you become a customer,
+            we rely on the <strong>performance of a contract</strong> with you and on our legitimate interests in
+            running the workshop.
+          </li>
+          <li>
+            <strong>To keep proper business records</strong> and meet our legal and accounting obligations, where we
+            rely on <strong>compliance with a legal obligation</strong>.
+          </li>
+          <li>
+            <strong>To maintain and secure this website</strong>, where we rely on our legitimate interests in
+            keeping the site working safely and reliably.
+          </li>
+        </ul>
+        <p>
+          We do not use your details to send marketing unless you have specifically asked us to, and we will never
+          sell your information.
+        </p>
+
+        <h2 class="reveal">Sharing your information</h2>
+        <p>
+          We do not sell, rent or trade your personal data, and we keep the people who can see it to a minimum. We
+          will only share your information where it is necessary to do so, for example with:
+        </p>
+        <ul>
+          <li>
+            trusted parts suppliers, specialist sub-contractors or our EV conversion partner where this is needed to
+            carry out work on your vehicle;
+          </li>
+          <li>
+            your insurer or a third party you have asked us to deal with on your behalf, for example in connection
+            with a bodywork or accident repair;
+          </li>
+          <li>
+            our professional advisers (such as our accountants) and service providers who help us run the workshop
+            and this website;
+          </li>
+          <li>
+            law enforcement, regulators or other authorities where we are required to do so by law.
+          </li>
+        </ul>
+        <p>
+          Where we use other organisations to process data on our behalf, we put appropriate safeguards in place and
+          they may only use your data on our instructions.
+        </p>
+
+        <h2 class="reveal">How long we keep your information</h2>
+        <p>
+          We keep your personal data only for as long as is necessary for the purposes set out in this policy. If you
+          make an enquiry but do not go on to become a customer, we will normally delete your details once your
+          enquiry has been dealt with. Where you become a customer, we keep service and vehicle records for as long
+          as we reasonably need them to look after your VW and to meet our legal, accounting and tax obligations,
+          after which they are securely deleted or anonymised.
+        </p>
+
+        <h2 class="reveal">Your rights under UK GDPR</h2>
+        <p>
+          Under UK data protection law you have a number of rights over your personal data. These include the right
+          to:
+        </p>
+        <ul>
+          <li><strong>Access</strong> the personal data we hold about you;</li>
+          <li><strong>Rectification</strong> - to ask us to correct inaccurate or incomplete data;</li>
+          <li><strong>Erasure</strong> - to ask us to delete your data in certain circumstances;</li>
+          <li><strong>Restriction</strong> - to ask us to limit how we use your data;</li>
+          <li><strong>Object</strong> to our processing of your data where we rely on legitimate interests;</li>
+          <li><strong>Data portability</strong> - to receive certain data in a portable format; and</li>
+          <li><strong>Withdraw consent</strong> at any time where we are relying on your consent.</li>
+        </ul>
+        <p>
+          To exercise any of these rights, please contact us by phone on
+          <a href={site.phone.href}>{site.phone.display}</a> or through our
+          <a href="/contact-us">contact page</a>. We will respond within the timescales required by law.
+        </p>
+        <p>
+          If you are unhappy with how we have handled your personal data, we would always like the chance to put
+          things right, so please get in touch first. You also have the right to lodge a complaint with the UK's
+          supervisory authority, the Information Commissioner's Office (ICO), at
+          <a href="https://ico.org.uk/" target="_blank" rel="noopener">ico.org.uk</a>.
+        </p>
+
+        <h2 class="reveal">Cookies</h2>
+        <p>
+          This website uses a small number of cookies and similar technologies to help it work properly and to
+          understand how visitors use it. You can control or disable cookies through your browser settings. For full
+          details of the cookies we use and how to manage them, please see our
+          <a href="/cookie-policy">Cookie Policy</a>.
+        </p>
+
+        <h2 class="reveal">Changes to this policy</h2>
+        <p>
+          We may update this Privacy Policy from time to time to reflect changes in our practices or in the law. Any
+          changes will be published on this page, and we encourage you to review it occasionally. The date below
+          shows when this policy was last updated.
+        </p>
+
+        <h2 class="reveal">How to contact us</h2>
+        <p>
+          If you have any questions about this Privacy Policy or about how we handle your personal data, please
+          contact us:
+        </p>
+        <ul>
+          <li>By phone on <a href={site.phone.href}>{site.phone.display}</a> (Monday to Friday, 8am to 6pm);</li>
+          <li>By message on <a href={site.facebook} target="_blank" rel="noopener">our Facebook page</a>; or</li>
+          <li>Through our <a href="/contact-us">contact form</a>.</li>
+        </ul>
+        <p>
+          You can also write to us at Jack's Garage, {site.address.line1}, {site.address.city} {site.address.postcode}.
+        </p>
+
+        <div class="reveal mt-12 flex flex-col gap-4 rounded-3xl border border-line bg-cream-200 p-6 sm:flex-row sm:items-center sm:justify-between">
+          <p class="m-0 text-sm text-muted">Last updated: {lastUpdated}</p>
+          <div class="flex flex-wrap gap-3">
+            <a href={site.phone.href} class="btn btn-primary"><Phone size={17} /> Call the workshop</a>
+            <a href={site.facebook} target="_blank" rel="noopener" class="btn btn-outline"><FacebookIcon size={16} /> Facebook</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Questions about your data, or your VW?"
+    subtitle="We keep things simple and honest. Call the team or send an enquiry and we'll be glad to help."
+  />
+</Layout>

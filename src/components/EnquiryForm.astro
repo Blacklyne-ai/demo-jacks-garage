@@ -1,0 +1,88 @@
+---
+import { Phone, Send, CheckCircle2, ShieldCheck } from '@lucide/astro';
+import FacebookIcon from './FacebookIcon.astro';
+import { site } from '../data/site';
+
+export interface Field {
+  name: string;
+  label: string;
+  type: 'text' | 'email' | 'tel' | 'date' | 'textarea' | 'select' | 'file';
+  required?: boolean;
+  options?: string[];
+  placeholder?: string;
+  full?: boolean;
+  help?: string;
+}
+interface Props { formName: string; fields: Field[]; submitLabel?: string }
+const { formName, fields, submitLabel = 'Send enquiry' } = Astro.props;
+const inputCls =
+  'mt-1.5 w-full rounded-xl border border-line bg-cream-100 px-4 py-3 text-[0.95rem] text-ink outline-none transition-colors placeholder:text-muted/70 focus:border-brand-400 focus:bg-white';
+---
+<div class="rounded-3xl border border-line bg-white p-6 shadow-card md:p-8">
+  <form data-enquiry name={formName} class="grid gap-x-5 gap-y-4 sm:grid-cols-2" novalidate={false}>
+    {fields.map((f) => (
+      <div class:list={[f.full || f.type === 'textarea' ? 'sm:col-span-2' : '']}>
+        <label for={`${formName}-${f.name}`} class="block text-sm font-semibold text-ink-700">
+          {f.label}{f.required && <span class="text-brand-600"> *</span>}
+        </label>
+        {f.type === 'textarea' ? (
+          <textarea id={`${formName}-${f.name}`} name={f.name} required={f.required} rows="4" placeholder={f.placeholder} class={inputCls}></textarea>
+        ) : f.type === 'select' ? (
+          <select id={`${formName}-${f.name}`} name={f.name} required={f.required} class={inputCls}>
+            <option value="" disabled selected>Please choose…</option>
+            {f.options?.map((o) => <option value={o}>{o}</option>)}
+          </select>
+        ) : f.type === 'file' ? (
+          <input id={`${formName}-${f.name}`} name={f.name} type="file" accept="image/*" multiple class={`${inputCls} file:mr-3 file:rounded-lg file:border-0 file:bg-brand-50 file:px-3 file:py-1.5 file:text-sm file:font-semibold file:text-brand-700`} />
+        ) : (
+          <input id={`${formName}-${f.name}`} name={f.name} type={f.type} required={f.required} placeholder={f.placeholder} class={inputCls} />
+        )}
+        {f.help && <p class="mt-1 text-xs text-muted">{f.help}</p>}
+      </div>
+    ))}
+
+    <label class="sm:col-span-2 mt-1 flex items-start gap-3 text-[0.85rem] leading-relaxed text-muted">
+      <input type="checkbox" name="gdpr" required class="mt-0.5 h-4 w-4 shrink-0 rounded border-line text-brand-600 focus:ring-brand-400" />
+      <span>I consent to Jack's Garage storing the details I have submitted so they can respond to my enquiry. See our <a href="/privacy-policy" class="font-medium text-brand-700 underline underline-offset-2">Privacy Policy</a>.</span>
+    </label>
+
+    <!-- honeypot -->
+    <input type="text" name="company" tabindex="-1" autocomplete="off" class="hidden" aria-hidden="true" />
+
+    <div class="sm:col-span-2">
+      <button type="submit" class="btn btn-primary btn-lg w-full sm:w-auto">{submitLabel} <Send size={17} /></button>
+      <p class="mt-3 flex items-center gap-1.5 text-xs text-muted"><ShieldCheck size={14} class="text-brand-500" /> We'll only use your details to answer your enquiry.</p>
+    </div>
+  </form>
+
+  <!-- Success state (shown after submit; no backend in this demo build) -->
+  <div data-enquiry-success hidden>
+    <div class="flex flex-col items-center py-6 text-center">
+      <span class="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-brand-50 text-brand-600"><CheckCircle2 size={34} /></span>
+      <h3 class="mt-5 text-h2 font-bold text-ink">Almost there - let's talk VWs</h3>
+      <p class="mx-auto mt-3 max-w-md text-[0.95rem] leading-relaxed text-muted">
+        Thanks for your details. The quickest way to reach the workshop is a quick call on
+        <span class="font-mono text-ink"> {site.phone.display}</span> (Mon-Fri 8am-6pm) - or send us a message on Facebook and we'll get you booked in.
+      </p>
+      <div class="mt-7 flex flex-col gap-3 sm:flex-row">
+        <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> Call {site.phone.display}</a>
+        <a href={site.facebook} target="_blank" rel="noopener" class="btn btn-outline btn-lg"><FacebookIcon size={17} /> Message on Facebook</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLFormElement>('form[data-enquiry]').forEach((form) => {
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      // honeypot — silently ignore bots
+      if ((form.elements.namedItem('company') as HTMLInputElement)?.value) return;
+      const wrap = form.parentElement;
+      const success = wrap?.querySelector<HTMLElement>('[data-enquiry-success]');
+      form.setAttribute('hidden', '');
+      success?.removeAttribute('hidden');
+      success?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+</script>

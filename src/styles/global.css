@@ -1,0 +1,214 @@
+/* Jack's Garage — global stylesheet (Classic VW specialist, light heritage mood).
+   We own the @tailwind directives (integration runs applyBaseStyles:false) so our
+   @layer base / @layer components rules cascade BELOW utilities — utilities always win. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------- BASE */
+@layer base {
+  :root {
+    --nav-h: 84px;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 120px;
+  }
+
+  body {
+    @apply bg-cream text-ink font-sans antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display text-ink;
+    font-weight: 800;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background: #C8101C;
+    color: #fff;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(200, 16, 28, 0.55), 0 0 0 5px rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+  }
+
+  img { @apply max-w-full; }
+
+  /* Honour reduced-motion: kill transitions, reveal everything, stop loops. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+    .reveal { opacity: 1 !important; transform: none !important; }
+  }
+}
+
+/* ---------------------------------------------------------- COMPONENTS */
+@layer components {
+  .container-jg { @apply mx-auto w-full max-w-8xl px-5 sm:px-7 lg:px-10; }
+
+  .section { @apply py-20 md:py-28; }
+  .section-lg { @apply py-24 md:py-36; }
+
+  /* Heritage script accent — DM Serif Display italic for "Classic VW" moments */
+  .script-accent { @apply font-serif italic; font-weight: 400; }
+
+  /* Eyebrow label — mono, spaced, classic VW red */
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono text-eyebrow font-medium uppercase text-brand-700;
+  }
+  .eyebrow::before {
+    content: "";
+    @apply inline-block h-[7px] w-[7px] rounded-full bg-brand-500;
+    box-shadow: 0 0 0 4px rgba(200, 16, 28, 0.18);
+  }
+  .eyebrow-on-dark { @apply text-brand-300; }
+  .eyebrow-on-dark::before { box-shadow: 0 0 0 4px rgba(200, 16, 28, 0.28); }
+
+  /* Buttons --------------------------------------------------------- */
+  .btn {
+    @apply relative inline-flex select-none items-center justify-center gap-2 overflow-hidden rounded-pill
+           px-6 py-3.5 text-[0.95rem] font-semibold leading-none transition-all duration-300;
+    transition-timing-function: var(--ease-out);
+  }
+  .btn-lg { @apply px-8 py-4 text-base; }
+  .btn svg { @apply transition-transform duration-300; }
+
+  /* Classic VW red with WHITE text — 4.8:1 contrast (AA) and on-brand. */
+  .btn-primary {
+    @apply bg-orange-grad text-white shadow-[0_10px_30px_-8px_rgba(200,16,28,0.6)];
+  }
+  .btn-primary:hover {
+    @apply scale-[1.05] shadow-[0_16px_40px_-8px_rgba(200,16,28,0.75)];
+  }
+  .btn-primary:hover svg.arrow { transform: translateX(4px); }
+
+  /* Shimmer sweep on primary buttons */
+  .btn-primary::after {
+    content: "";
+    @apply pointer-events-none absolute inset-y-0 -left-1/4 w-1/3 skew-x-[-20deg] bg-white/30 opacity-0;
+  }
+  .btn-primary:hover::after { @apply opacity-100; animation: shimmer 0.9s var(--ease-out); }
+
+  .btn-dark { @apply bg-ink text-white; }
+  .btn-dark:hover { @apply scale-[1.04] bg-ink-700; }
+
+  .btn-outline {
+    @apply border border-ink/15 bg-white/60 text-ink backdrop-blur;
+  }
+  .btn-outline:hover { @apply border-brand-500 text-brand-700 bg-white; }
+
+  .btn-ghost-light {
+    @apply border border-white/25 bg-white/10 text-white backdrop-blur;
+  }
+  .btn-ghost-light:hover { @apply bg-white/20 border-white/50; }
+
+  /* Cards ----------------------------------------------------------- */
+  .card {
+    @apply rounded-3xl border border-line bg-white shadow-card;
+  }
+
+  /* Warm-cream glass (nav + floating surfaces) */
+  .glass {
+    background: rgba(250, 248, 242, 0.85);
+    backdrop-filter: blur(20px) saturate(150%);
+    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    @apply border border-white/60;
+  }
+  .glass-dark {
+    background: rgba(15, 15, 15, 0.55);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    @apply border border-white/10;
+  }
+
+  /* Service card — hover lift + classic-VW-red border glow */
+  .service-card {
+    @apply relative flex flex-col overflow-hidden rounded-3xl border border-line bg-white shadow-card
+           transition-all duration-500;
+    transition-timing-function: var(--ease-out);
+  }
+  .service-card:hover {
+    @apply -translate-y-1.5 border-brand-300 shadow-card-hover;
+  }
+  .service-card:hover .service-card__img { transform: scale(1.07); }
+  .service-card:hover .service-card__arrow { @apply bg-brand-500 text-white; transform: translate(2px,-2px); }
+
+  /* Icon tile holding a Lucide glyph */
+  .icon-tile {
+    @apply inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-brand-50 text-brand-600
+           ring-1 ring-brand-100 transition-colors duration-300;
+  }
+  .icon-tile-dark {
+    @apply inline-flex h-14 w-14 items-center justify-center rounded-2xl text-brand-300;
+    background: rgba(200, 16, 28, 0.14);
+    @apply ring-1 ring-white/10;
+  }
+
+  /* Animated link underline */
+  .link-underline { @apply relative; }
+  .link-underline::after {
+    content: "";
+    @apply absolute -bottom-0.5 left-0 h-px w-full origin-right scale-x-0 bg-current transition-transform duration-300;
+    transition-timing-function: var(--ease-out);
+  }
+  .link-underline:hover::after { @apply origin-left scale-x-100; }
+
+  /* Trust chips */
+  .chip {
+    @apply inline-flex items-center gap-2 rounded-pill border border-line bg-white/70 px-4 py-2
+           text-sm font-medium text-ink-700 backdrop-blur;
+  }
+  .chip svg { @apply text-brand-500; }
+
+  /* Big stat number — mono */
+  .stat-num {
+    @apply font-mono font-semibold tracking-tightest text-ink;
+    font-size: clamp(2.75rem, 5vw, 4rem);
+    line-height: 1;
+  }
+
+  /* Live opening status pill */
+  .status-pill {
+    @apply inline-flex items-center gap-2 rounded-pill px-3 py-1.5 text-[0.78rem] font-semibold;
+  }
+  .status-dot { @apply inline-block h-2 w-2 rounded-full; }
+  .status-dot--open { @apply bg-ok; animation: pulse-ring 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+  .status-dot--closed { @apply bg-closed; animation: pulse-ring-red 2s cubic-bezier(0.4,0,0.6,1) infinite; }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s var(--ease-out), transform 0.7s var(--ease-out);
+    transition-delay: var(--reveal-delay, 0ms);
+    will-change: opacity, transform;
+  }
+  .reveal.is-visible { opacity: 1; transform: none; }
+
+  /* Hairline divider */
+  .hairline { @apply h-px w-full bg-line; }
+
+  /* Readable prose for legal / long-form pages */
+  .prose-jg { @apply text-[1.0625rem] leading-relaxed text-ink-700; }
+  .prose-jg h2 { @apply mt-12 mb-4 text-h2; }
+  .prose-jg h3 { @apply mt-8 mb-3 text-h3 font-bold; }
+  .prose-jg p { @apply mb-4; }
+  .prose-jg ul { @apply mb-4 ml-5 list-disc space-y-2; }
+  .prose-jg a { @apply font-medium text-brand-700 underline underline-offset-2; }
+  .prose-jg strong { @apply text-ink; }
+}

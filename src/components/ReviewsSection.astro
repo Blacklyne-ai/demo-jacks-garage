@@ -1,0 +1,53 @@
+---
+import { Star, ArrowUpRight, Quote } from '@lucide/astro';
+import { googleReviews, googleRating, mapsLink, reviewsPlaceholderNote } from '../data/site';
+const hasReviews = googleReviews.length > 0;
+---
+{hasReviews ? (
+  <div>
+    <div class="reveal mx-auto mb-10 flex max-w-md flex-col items-center gap-2 text-center">
+      <div class="flex items-center gap-1 text-brand-500">
+        {Array.from({ length: 5 }).map(() => <Star size={22} fill="currentColor" strokeWidth={0} />)}
+      </div>
+      <p class="text-sm font-medium text-muted">{googleRating.value} stars from {googleRating.count} Google reviews</p>
+    </div>
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {googleReviews.slice(0, 6).map((r, i) => (
+        <figure class="card reveal flex flex-col p-7" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+          <Quote size={28} class="text-brand-200" />
+          <blockquote class="mt-3 flex-1 text-[1.0rem] leading-relaxed text-ink-700">{r.text}</blockquote>
+          <div class="mt-5 flex items-center gap-1 text-brand-500">
+            {Array.from({ length: r.rating }).map(() => <Star size={15} fill="currentColor" strokeWidth={0} />)}
+          </div>
+          <figcaption class="mt-2 text-sm font-semibold text-ink">{r.author}</figcaption>
+        </figure>
+      ))}
+    </div>
+    {googleRating.profileUrl && (
+      <div class="reveal mt-10 text-center">
+        <a href={googleRating.profileUrl} target="_blank" rel="noopener" class="btn btn-outline btn-lg">Read all reviews on Google <ArrowUpRight size={17} /></a>
+      </div>
+    )}
+  </div>
+) : (
+  <div class="reveal mx-auto max-w-2xl">
+    <div class="card relative overflow-hidden p-8 text-center md:p-12">
+      <div aria-hidden="true" class="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full bg-brand-500/10 blur-2xl"></div>
+      <div class="relative">
+        <span class="inline-flex items-center gap-2 rounded-pill border border-line bg-surface px-4 py-1.5 text-sm font-semibold text-ink-700">
+          <span class="inline-block h-2.5 w-2.5 rounded-full bg-orange-grad"></span> Google Reviews
+        </span>
+        <div class="mt-6 flex items-center justify-center gap-1.5 text-brand-400">
+          {Array.from({ length: 5 }).map(() => <Star size={26} strokeWidth={1.5} />)}
+        </div>
+        <p class="mx-auto mt-6 max-w-lg text-body-xl text-ink-700">
+          {reviewsPlaceholderNote}
+        </p>
+        <p class="mx-auto mt-3 max-w-lg text-[0.95rem] leading-relaxed text-muted">
+          A family business since 1995 and featured in six motoring magazines - our reputation is built on three decades of honest, expert VW work. Been to see us? We would love you to share your experience on Google.
+        </p>
+        <a href={mapsLink} target="_blank" rel="noopener" class="btn btn-outline btn-lg mt-8">Find us on Google <ArrowUpRight size={17} /></a>
+      </div>
+    </div>
+  </div>
+)}

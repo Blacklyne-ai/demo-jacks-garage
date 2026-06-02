@@ -1,0 +1,200 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import FacebookIcon from '../components/FacebookIcon.astro';
+import { Phone, ArrowUpRight } from '@lucide/astro';
+import { site } from '../data/site';
+
+const cookieRows = [
+  {
+    category: 'Strictly necessary',
+    purpose:
+      "Remembers your cookie choice (Accept all / Necessary only) so the consent banner does not reappear on every visit. This is the only data this site stores by default.",
+    name: "jg-cookie-consent",
+    type: 'First-party (localStorage)',
+    duration: 'Until you clear it',
+  },
+  {
+    category: 'Optional / third-party',
+    purpose:
+      'The embedded Google Map on our Contact page. Google may set its own cookies when the map loads. These are set only after you choose "Accept all".',
+    name: 'Set by Google',
+    type: 'Third-party (Google Maps)',
+    duration: 'Set by Google',
+  },
+];
+---
+<Layout
+  title="Cookie Policy - Jack's Garage | Classic VW Specialists London W10"
+  description="How and why this website uses cookies. Jack's Garage sets essential consent cookies only; the embedded Google Map may set cookies after consent. No marketing or advertising cookies."
+  path="/cookie-policy"
+>
+  <PageHero
+    eyebrow="Legal"
+    title="Cookie Policy"
+    subtitle="How and why this site uses cookies - kept <strong>minimal, honest and in your control</strong>."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Cookie Policy' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href="#managing-cookies" class="btn btn-outline btn-lg">How to manage cookies</a>
+  </PageHero>
+
+  <section class="section">
+    <div class="container-jg">
+      <div class="mx-auto max-w-3xl">
+        <p class="reveal chip"><Icon name="Clock" size={15} /> Last updated: 2026</p>
+
+        <div class="prose-jg reveal mt-8" style="--reveal-delay:60ms">
+          <p class="lead text-body-xl text-ink-700">
+            We like to keep things simple. This website does not run marketing or advertising cookies and does not track you across other sites. The only thing it stores by default is your cookie choice. This page explains what that means - in plain English.
+          </p>
+
+          <figure class="not-prose my-8 rounded-3xl border border-line bg-cream-200 p-7 md:p-8">
+            <p class="font-mono text-xs font-semibold uppercase tracking-wide text-brand-700">Our consent notice</p>
+            <blockquote class="mt-3 font-serif text-xl italic leading-snug text-ink md:text-2xl">
+              "This website uses essential cookies to ensure its proper operation and tracking cookies to understand how you interact with it. The latter will be set only after consent."
+            </blockquote>
+          </figure>
+
+          <h2>What are cookies?</h2>
+          <p>
+            Cookies are small text files that a website can place on your device when you visit. They are widely used to make websites work, to remember your preferences, and to help site owners understand how their pages are used. Closely related technologies - such as your browser's <strong>localStorage</strong> - work in a similar way by storing a small amount of information on your device. Where we mention "cookies" on this page, we mean cookies and these similar technologies together.
+          </p>
+          <p>
+            Some cookies are set by the website you are visiting (these are called <strong>first-party</strong> cookies). Others are set by a different organisation whose content is embedded in the page, such as a map (these are called <strong>third-party</strong> cookies).
+          </p>
+
+          <h2>How we use cookies</h2>
+          <p>
+            We have deliberately kept our use of cookies to a minimum:
+          </p>
+          <ul>
+            <li>
+              <strong>Essential consent cookie.</strong> When you respond to our cookie banner, we save your choice in your browser under the key <strong>jg-cookie-consent</strong> (stored in localStorage). This lets us respect your decision and avoid showing you the banner on every page. Nothing in this value identifies you personally.
+            </li>
+            <li>
+              <strong>Embedded Google Map.</strong> Our Contact page includes a Google Map so you can find the workshop in Ladbroke Grove. When that map loads, Google may set its own third-party cookies. These are set <strong>only after you choose "Accept all"</strong> on the banner. If you choose "Necessary only", we treat that as your preference not to load optional third-party content.
+            </li>
+            <li>
+              <strong>No marketing or advertising cookies.</strong> We do not run advertising, retargeting, social-media tracking or analytics-profiling cookies on this site, and we do not sell or share your browsing data.
+            </li>
+          </ul>
+
+          <h3>Cookie categories at a glance</h3>
+        </div>
+
+        <!-- Cookie categories table -->
+        <div class="reveal mt-6 overflow-hidden rounded-3xl border border-line shadow-card" style="--reveal-delay:120ms">
+          <div class="overflow-x-auto">
+            <table class="w-full border-collapse text-left text-[0.95rem]">
+              <thead>
+                <tr class="bg-ink-950 text-white">
+                  <th scope="col" class="px-5 py-4 font-semibold">Category</th>
+                  <th scope="col" class="px-5 py-4 font-semibold">What it does</th>
+                  <th scope="col" class="px-5 py-4 font-semibold">Name / source</th>
+                  <th scope="col" class="px-5 py-4 font-semibold">Stored</th>
+                </tr>
+              </thead>
+              <tbody>
+                {cookieRows.map((row, i) => (
+                  <tr class:list={['align-top border-t border-line', i % 2 === 1 ? 'bg-cream-200' : 'bg-white']}>
+                    <td class="px-5 py-4">
+                      <span class="font-semibold text-ink">{row.category}</span>
+                    </td>
+                    <td class="px-5 py-4 text-muted">{row.purpose}</td>
+                    <td class="px-5 py-4">
+                      <span class="block font-mono text-[0.8rem] text-ink">{row.name}</span>
+                      <span class="mt-1 block text-xs text-muted">{row.type}</span>
+                    </td>
+                    <td class="px-5 py-4 text-muted">{row.duration}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="prose-jg reveal mt-10" style="--reveal-delay:60ms">
+          <h2 id="managing-cookies">Managing your cookies</h2>
+          <p>You are always in control. There are two simple ways to manage cookies on this site:</p>
+          <ul>
+            <li>
+              <strong>Our cookie banner.</strong> When you first arrive, a banner appears with two choices. <strong>Accept all</strong> allows optional third-party content such as the Google Map to load. <strong>Necessary only</strong> keeps the site to its essential consent cookie. Your choice is saved so you are not asked again.
+            </li>
+            <li>
+              <strong>Reset your choice.</strong> To see the banner again or change your decision, clear this site's data in your browser (which removes the <strong>jg-cookie-consent</strong> value). The next time you visit, the banner will reappear.
+            </li>
+            <li>
+              <strong>Browser settings.</strong> Every major browser lets you view, block or delete cookies. You can usually find these controls under Settings, then Privacy or Security. Blocking essential cookies may mean the banner reappears on each visit, but the rest of the site will still work.
+            </li>
+          </ul>
+
+          <h2>Third-party services</h2>
+          <p>
+            The only third party able to set cookies through this website is <strong>Google</strong>, by way of the embedded Google Map on our Contact page, and only after you have chosen "Accept all". Google's own handling of any data it collects is governed by its privacy policy.
+          </p>
+        </div>
+
+        <a
+          href="https://policies.google.com/privacy"
+          target="_blank"
+          rel="noopener"
+          class="group reveal mt-2 flex items-center justify-between gap-4 rounded-2xl border border-line bg-white p-5 shadow-card transition-all duration-300 hover:-translate-y-0.5 hover:border-brand-300 hover:shadow-card-hover"
+        >
+          <span class="min-w-0">
+            <span class="block font-mono text-xs font-semibold uppercase tracking-wide text-brand-700">Google</span>
+            <span class="mt-1.5 block text-[0.95rem] font-semibold leading-snug text-ink">Read the Google Privacy &amp; Terms policy</span>
+          </span>
+          <ArrowUpRight size={18} class="shrink-0 text-muted transition-all duration-300 group-hover:-translate-y-0.5 group-hover:text-brand-600" />
+        </a>
+
+        <div class="prose-jg reveal mt-10" style="--reveal-delay:60ms">
+          <h2>Changes to this policy</h2>
+          <p>
+            We may update this Cookie Policy from time to time - for example, if we add a new feature or change the services embedded on our pages. When we do, we will revise the "Last updated" date at the top of this page. We encourage you to review it occasionally so you stay informed about how we use cookies.
+          </p>
+
+          <h2>Contact us</h2>
+          <p>
+            If you have any questions about this Cookie Policy or how we handle your data, the quickest way to reach the workshop is a phone call, or you can message us on Facebook. We do not operate a public email address - all enquiries come to us by phone, Facebook or our on-site forms.
+          </p>
+        </div>
+
+        <!-- Contact tiles (phone + Facebook only, no email) -->
+        <div class="reveal mt-6 grid gap-4 sm:grid-cols-2" style="--reveal-delay:120ms">
+          <a
+            href={site.phone.href}
+            class="group flex flex-col rounded-3xl border border-line bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover"
+          >
+            <span class="icon-tile transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white"><Phone size={22} /></span>
+            <p class="mt-5 text-sm font-medium text-muted">Call the workshop</p>
+            <p class="mt-1 text-h3 font-bold text-ink">{site.phone.display}</p>
+            <p class="mt-1 text-sm text-muted">Mon-Fri 8am-6pm</p>
+          </a>
+          <a
+            href={site.facebook}
+            target="_blank"
+            rel="noopener"
+            class="group flex flex-col rounded-3xl border border-line bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover"
+          >
+            <span class="icon-tile transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white"><FacebookIcon size={22} /></span>
+            <p class="mt-5 text-sm font-medium text-muted">Message on Facebook</p>
+            <p class="mt-1 text-h3 font-bold text-ink">@JacksGarageW10</p>
+            <p class="mt-1 text-sm text-muted">We reply between jobs</p>
+          </a>
+        </div>
+
+        <p class="reveal mt-8 text-sm text-muted" style="--reveal-delay:160ms">
+          Looking for how we handle your personal data? See our <a href="/privacy-policy" class="font-medium text-brand-700 underline underline-offset-2">Privacy Policy</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Questions about your VW - or your privacy?"
+    subtitle="Either way, the team is happy to help. Call us or pop in to the workshop in Ladbroke Grove, Monday to Friday, 8am to 6pm."
+  />
+</Layout>

@@ -1,0 +1,22 @@
+---
+// Sticky bottom call bar — the source workshop prefers phone calls (landline only).
+import { Phone, ArrowRight } from '@lucide/astro';
+import { site } from '../data/site';
+---
+<div class="fixed inset-x-0 bottom-0 z-[90] xl:hidden" style="padding-bottom: env(safe-area-inset-bottom, 0px)">
+  <div class="glass mx-3 mb-3 grid grid-cols-[1.4fr_1fr] gap-2 rounded-2xl p-2 shadow-glass-lg">
+    <a href={site.phone.href} class="flex items-center justify-center gap-2 rounded-xl bg-orange-grad px-4 py-3 text-sm font-semibold text-white">
+      <Phone size={18} /> Call {site.phone.display}
+    </a>
+    <a href="/contact-us" class="flex items-center justify-center gap-2 rounded-xl bg-ink px-4 py-3 text-sm font-semibold text-white">
+      Quote <ArrowRight size={16} />
+    </a>
+  </div>
+</div>
+
+<style is:global>
+  /* Keep page content clear of the fixed mobile bar */
+  @media (max-width: 1279px) {
+    body { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)); }
+  }
+</style>

@@ -1,0 +1,17 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  intro?: string;
+  align?: 'left' | 'center';
+  dark?: boolean;
+  class?: string;
+}
+const { eyebrow, title, intro, align = 'center', dark = false, class: cls = '' } = Astro.props;
+const wrap = align === 'center' ? 'mx-auto max-w-3xl text-center items-center' : 'max-w-2xl text-left items-start';
+---
+<div class:list={['flex flex-col gap-4', wrap, cls]}>
+  {eyebrow && <span class:list={['eyebrow reveal', dark && 'eyebrow-on-dark']}>{eyebrow}</span>}
+  <h2 class:list={['text-d3 reveal', dark ? 'text-white' : 'text-ink']} style="--reveal-delay:60ms">{title}</h2>
+  {intro && <p class:list={['text-body-xl reveal', dark ? 'text-white/70' : 'text-muted']} style="--reveal-delay:120ms">{intro}</p>}
+</div>

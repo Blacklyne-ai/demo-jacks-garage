@@ -1,0 +1,131 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { Phone, ArrowRight, Camera, ShieldCheck, PoundSterling, HeartHandshake, Check } from '@lucide/astro';
+import { site } from '../data/site';
+
+const fields = [
+  { name: 'name', label: 'Name', type: 'text', required: true },
+  { name: 'email', label: 'Email', type: 'email', required: true },
+  { name: 'phone', label: 'Telephone', type: 'tel', required: true },
+  { name: 'model', label: 'VW Model', type: 'text', required: true, placeholder: 'e.g. VW Golf' },
+  { name: 'year', label: 'Year', type: 'text', placeholder: 'e.g. 2014' },
+  { name: 'damage', label: 'Describe the damage', type: 'textarea', required: true, full: true, placeholder: 'Tell us what happened and what needs putting right - the more detail, the better.' },
+  { name: 'photos', label: 'Photos', type: 'file', help: 'Upload photos of the damage' },
+  { name: 'insurance', label: 'Is this an insurance claim?', type: 'select', options: ['Yes - insurance claim', 'No - paying privately', 'Not sure'] },
+] as const;
+
+// Reassurance pillars — what to expect when you enquire about bodywork.
+const promises = [
+  { icon: 'PoundSterling', title: 'An upfront estimate, every time', text: "We look over your VW to see exactly what work is required and always give you an estimate before starting - no surprises once the job is under way." },
+  { icon: 'HeartHandshake', title: "We'll only ever do as much as you want us to", text: 'You decide how far to take it. From a quick scratch and dent tidy-up to a full rebuild, the work stops where you want it to.' },
+  { icon: 'ShieldCheck', title: 'Insurance work welcome', text: 'We handle insurance estimates and insurance repairs as well as private work - just let us know in the form and we will guide you through it.' },
+];
+
+// The 10 VW Bodywork services (verbatim from the service page).
+const bodyworkServices = [
+  'Insurance Estimates',
+  'Insurance Repairs',
+  'Panel Beating',
+  'Panel Replacements',
+  'Welding',
+  'Full Resprays',
+  'Bumper Repairs / Replacement',
+  'Undersealing',
+  'Colour Matching',
+  'Rust Inspections',
+];
+---
+<Layout
+  title="Bodywork Enquiry - Jack's Garage | Classic VW Specialists London W10"
+  description="Tell us about the damage to your VW. Send a few photos and a description for an upfront bodywork estimate from Jack's Garage in Ladbroke Grove W10. Insurance work welcome."
+  path="/bodywork-enquiry"
+  image="/images/workshop/ws-35.jpg"
+>
+  <PageHero
+    eyebrow="Bodywork Enquiry"
+    title="Tell us about the damage"
+    subtitle="Describe what needs putting right and add a few photos - we'll come back to you with an honest, <strong class='text-ink'>upfront estimate</strong>. From scratch and dent repairs to full resprays, our team has it covered."
+    image="/images/workshop/ws-35.jpg"
+    imageAlt="VW bodywork repair in progress in the Jack's Garage workshop, Ladbroke Grove"
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Bodywork Enquiry' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href="/services/vw-bodywork" class="btn btn-outline btn-lg">Bodywork service <ArrowRight size={16} class="arrow" /></a>
+  </PageHero>
+
+  <!-- Form + reassurance -->
+  <section class="section">
+    <div class="container-jg grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <!-- LEFT: enquiry form -->
+      <div>
+        <span class="eyebrow reveal">Send the details</span>
+        <h2 class="reveal mt-3 text-h2 font-bold text-ink" style="--reveal-delay:60ms">A few details and some photos</h2>
+        <p class="reveal mt-2 max-w-xl text-muted" style="--reveal-delay:120ms">
+          The clearer the picture, the more accurate our estimate. Photos of the damage are a real help - close up and from a step back.
+        </p>
+        <div class="reveal mt-6" style="--reveal-delay:160ms">
+          <EnquiryForm formName="bodywork-enquiry" fields={fields} submitLabel="Send enquiry" />
+        </div>
+      </div>
+
+      <!-- RIGHT: reassurance panel -->
+      <aside class="flex flex-col gap-6">
+        <div class="reveal rounded-3xl border border-line bg-cream-200 p-7 shadow-card md:p-8">
+          <span class="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-xs font-semibold text-brand-700 ring-1 ring-line">
+            <Camera size={14} /> Photos help us most
+          </span>
+          <h3 class="mt-5 text-h3 font-bold text-ink">What to expect</h3>
+          <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">
+            We're confident we provide the best car body repairs for VWs in the area - and we keep it straightforward from the very first message.
+          </p>
+          <ul class="mt-6 space-y-5">
+            {promises.map((p) => (
+              <li class="flex gap-4">
+                <span class="icon-tile h-11 w-11 shrink-0"><Icon name={p.icon} size={20} /></span>
+                <span>
+                  <span class="block text-[0.95rem] font-semibold text-ink">{p.title}</span>
+                  <span class="mt-1 block text-sm leading-relaxed text-muted">{p.text}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="reveal rounded-3xl border border-line bg-white p-7 shadow-card md:p-8" style="--reveal-delay:80ms">
+          <h3 class="text-h3 font-bold text-ink">Our <span class="script-accent text-brand-600">bodywork</span> services</h3>
+          <p class="mt-2 text-sm leading-relaxed text-muted">
+            From the smaller jobs to full car rebuilds with welding and structural repair - whatever your VW needs.
+          </p>
+          <ul class="mt-5 grid gap-x-4 gap-y-2.5 sm:grid-cols-2">
+            {bodyworkServices.map((s) => (
+              <li class="flex items-start gap-2 text-[0.9rem] text-ink-700">
+                <Check size={16} class="mt-0.5 shrink-0 text-brand-600" /> {s}
+              </li>
+            ))}
+          </ul>
+          <a href="/services/vw-bodywork" class="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">
+            See the full bodywork service <ArrowRight size={15} class="arrow" />
+          </a>
+        </div>
+
+        <a href={site.phone.href} class="reveal group flex items-center gap-4 rounded-3xl border border-line bg-ink-950 p-6 text-white shadow-card transition-colors hover:border-brand-500/50" style="--reveal-delay:120ms">
+          <span class="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-500 text-white"><Phone size={22} /></span>
+          <span class="flex-1">
+            <span class="block text-sm text-white/60">Prefer to talk it through?</span>
+            <span class="block text-h3 font-bold text-white">{site.phone.display}</span>
+            <span class="block text-sm text-white/60">Mon-Fri 8am-6pm</span>
+          </span>
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Let's get your VW looking right again"
+    subtitle="Send the form above or give the workshop a call for honest advice and an upfront estimate. We are open Monday to Friday, 8am to 6pm, here in Ladbroke Grove."
+  />
+</Layout>

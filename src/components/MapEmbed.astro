@@ -1,0 +1,16 @@
+---
+import { mapEmbed } from '../data/site';
+interface Props { class?: string; title?: string }
+const { class: cls = '', title = "Map showing Jack's Garage, 20/22 Kingsdown Close, London W10 6SW" } = Astro.props;
+---
+<div class:list={['relative overflow-hidden rounded-3xl border border-line bg-surface shadow-card', cls]}>
+  <iframe
+    title={title}
+    src={mapEmbed}
+    loading="lazy"
+    referrerpolicy="no-referrer-when-downgrade"
+    allowfullscreen
+    class="absolute inset-0 h-full w-full"
+    style="border:0"
+  ></iframe>
+</div>

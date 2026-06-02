@@ -1,0 +1,22 @@
+---
+import Icon from './Icon.astro';
+interface Step { n: string; title: string; text: string; icon: string }
+interface Props { steps: Step[] }
+const { steps } = Astro.props;
+---
+<div class="relative grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+  <!-- connecting line (desktop) -->
+  <div aria-hidden="true" class="absolute left-0 right-0 top-9 hidden h-px bg-gradient-to-r from-brand-200 via-brand-300 to-brand-200 lg:block"></div>
+  {steps.map((step, i) => (
+    <div class="reveal relative" style={`--reveal-delay:${i * 110}ms`}>
+      <div class="flex items-center gap-4 lg:flex-col lg:items-start">
+        <span class="relative z-10 inline-flex h-[4.5rem] w-[4.5rem] shrink-0 items-center justify-center rounded-2xl bg-white text-brand-600 shadow-card ring-1 ring-line">
+          <Icon name={step.icon} size={26} />
+          <span class="absolute -right-2 -top-2 inline-flex h-7 w-7 items-center justify-center rounded-full bg-orange-grad font-mono text-xs font-bold text-white">{step.n}</span>
+        </span>
+      </div>
+      <h3 class="mt-5 text-h3 font-bold text-ink">{step.title}</h3>
+      <p class="mt-2 text-[0.95rem] leading-relaxed text-muted">{step.text}</p>
+    </div>
+  ))}
+</div>

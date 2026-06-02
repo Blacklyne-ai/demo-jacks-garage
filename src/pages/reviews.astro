@@ -1,0 +1,121 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ReviewsSection from '../components/ReviewsSection.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/Icon.astro';
+import { Phone, ArrowUpRight, Star } from '@lucide/astro';
+import { site, mapsLink } from '../data/site';
+
+// "Why customers trust us" — honest, evidence-based trust points (no star counts,
+// no invented quotes). Each maps to a fact already established across the site.
+const trustPoints = [
+  {
+    icon: 'HeartHandshake',
+    title: 'A family business since 1995',
+    text: 'Independent, family-run and still in the same hands. We bend over backwards for our customers because every VW that comes in matters to us.',
+  },
+  {
+    icon: 'MapPin',
+    title: '30+ years in Ladbroke Grove W10',
+    text: 'Three decades servicing all varieties of Volkswagen from the same Kingsdown Close workshop - a fixture of the local community.',
+  },
+  {
+    icon: 'Award',
+    title: 'Featured in 6 motoring magazines',
+    text: 'Our pioneering classic-VW EV conversions were covered by six magazines in a single spring, alongside The Times, Sky News and Autocar.',
+  },
+  {
+    icon: 'BadgeCheck',
+    title: 'Skilled, qualified technicians',
+    text: 'A highly skilled team of VW experts man the workshops - classic air-cooled to the very latest electric, with the eClassics know-how to match.',
+  },
+] as const;
+---
+<Layout
+  title="Reviews - Jack's Garage | Classic VW Specialists London W10"
+  description="Three decades of customer trust at Jack's Garage, Classic VW specialists in Ladbroke Grove, London W10. Read our Google reviews or share your own experience."
+  path="/reviews"
+>
+  <PageHero
+    eyebrow="Reviews"
+    title="Three decades of trust"
+    subtitle="Since 1995 our reputation has been built on one thing - <strong>honest, expert VW work</strong>. Don't just take our word for it; find us on Google and see what our customers have to say."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'Reviews' }]}
+  >
+    <a href={site.phone.href} class="btn btn-primary btn-lg"><Phone size={18} /> {site.phone.display}</a>
+    <a href={mapsLink} target="_blank" rel="noopener" class="btn btn-outline btn-lg">Find us on Google <ArrowUpRight size={17} /></a>
+  </PageHero>
+
+  <!-- Google Reviews (approved placeholder until Place Details API is live) -->
+  <section class="section">
+    <div class="container-jg">
+      <SectionHeading
+        eyebrow="Customer reviews"
+        title="What our customers say"
+        intro="We display verified reviews directly from our Google Business Profile, so every word you read is from a real customer."
+      />
+      <div class="mt-14">
+        <ReviewsSection />
+      </div>
+    </div>
+  </section>
+
+  <!-- Why customers trust us -->
+  <section class="section bg-cream-200">
+    <div class="container-jg">
+      <SectionHeading
+        eyebrow="Why VW owners choose us"
+        title="Reputation, earned the slow way"
+        intro="No gimmicks and no shortcuts - just three decades of looking after Volkswagens and the people who love them."
+      />
+      <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {trustPoints.map((p, i) => (
+          <article class="card reveal flex h-full flex-col p-7" style={`--reveal-delay:${(i % 4) * 80}ms`}>
+            <span class="icon-tile"><Icon name={p.icon} size={24} /></span>
+            <h3 class="mt-5 text-h3 font-bold text-ink">{p.title}</h3>
+            <p class="mt-2 flex-1 text-[0.95rem] leading-relaxed text-muted">{p.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Invite a Google review -->
+  <section class="section pt-0">
+    <div class="container-jg">
+      <div class="relative overflow-hidden rounded-4xl border border-line bg-white p-8 shadow-card md:p-12">
+        <div aria-hidden="true" class="pointer-events-none absolute -right-20 -top-20 h-56 w-56 rounded-full bg-brand-500/10 blur-3xl"></div>
+        <div class="relative grid items-center gap-10 lg:grid-cols-[1.4fr_1fr]">
+          <div>
+            <span class="eyebrow reveal">Been to see us?</span>
+            <h2 class="reveal mt-4 text-d3 text-ink" style="--reveal-delay:60ms">Share your <span class="script-accent text-brand-600">experience</span> on Google</h2>
+            <p class="reveal mt-5 text-body-xl leading-relaxed text-muted" style="--reveal-delay:120ms">
+              If we've serviced, repaired or converted your Volkswagen, a few words on Google means the world to a small independent workshop - and helps other VW owners find honest, specialist care.
+            </p>
+            <div class="reveal mt-8 flex flex-wrap gap-3" style="--reveal-delay:180ms">
+              <a href={mapsLink} target="_blank" rel="noopener" class="btn btn-primary btn-lg">Find us on Google <ArrowUpRight size={17} /></a>
+              <a href={site.phone.href} class="btn btn-outline btn-lg"><Phone size={18} /> {site.phone.display}</a>
+            </div>
+          </div>
+          <div class="reveal" style="--reveal-delay:140ms">
+            <div class="rounded-3xl border border-line bg-cream-200 p-7 text-center">
+              <div class="flex items-center justify-center gap-1.5 text-brand-500">
+                {Array.from({ length: 5 }).map(() => <Star size={24} fill="currentColor" strokeWidth={0} />)}
+              </div>
+              <p class="mt-4 text-[0.95rem] leading-relaxed text-ink-700">
+                Leave a review on our Google Business Profile - it takes less than a minute and we read every one.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Experience the difference for yourself"
+    subtitle="The best review is a VW that runs beautifully. Call the team for honest advice and a quote, or pop in to the Ladbroke Grove workshop."
+  />
+</Layout>

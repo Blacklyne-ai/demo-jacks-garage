@@ -1,0 +1,41 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  image?: string;
+  imageAlt?: string;
+  breadcrumbs?: { label: string; href?: string }[];
+}
+const { eyebrow, title, subtitle, image, imageAlt = '', breadcrumbs = [] } = Astro.props;
+---
+<section class="relative overflow-hidden bg-white pt-32 md:pt-40">
+  <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-60 [background-size:46px_46px]"></div>
+  <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-[30rem] w-[30rem] rounded-full bg-brand-500/10 blur-3xl"></div>
+  <div class="container-jg relative pb-14 md:pb-20">
+    {breadcrumbs.length > 0 && (
+      <nav aria-label="Breadcrumb" class="reveal mb-6 flex flex-wrap items-center gap-2 text-sm text-muted">
+        {breadcrumbs.map((c, i) => (
+          <span class="inline-flex items-center gap-2">
+            {i > 0 && <span class="text-line">/</span>}
+            {c.href ? <a href={c.href} class="transition-colors hover:text-brand-700">{c.label}</a> : <span class="text-ink">{c.label}</span>}
+          </span>
+        ))}
+      </nav>
+    )}
+    <div class:list={['grid items-center gap-12', image ? 'lg:grid-cols-2' : '']}>
+      <div class:list={[image ? '' : 'max-w-3xl']}>
+        {eyebrow && <span class="eyebrow reveal">{eyebrow}</span>}
+        <h1 class="reveal mt-4 text-d2 text-ink" style="--reveal-delay:60ms">{title}</h1>
+        {subtitle && <p class="reveal mt-5 text-body-xl text-muted" style="--reveal-delay:120ms" set:html={subtitle} />}
+        <div class="reveal mt-8 flex flex-wrap gap-3" style="--reveal-delay:180ms"><slot /></div>
+      </div>
+      {image && (
+        <div class="reveal relative" style="--reveal-delay:140ms">
+          <div aria-hidden="true" class="absolute -inset-3 -z-10 rounded-[2.25rem] bg-orange-grad opacity-15 blur-2xl"></div>
+          <img src={image} alt={imageAlt} width="825" height="620" loading="eager" class="aspect-[4/3] w-full rounded-3xl border border-line object-cover shadow-glass-lg" />
+        </div>
+      )}
+    </div>
+  </div>
+</section>

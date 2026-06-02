@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EnquiryForm from '../components/EnquiryForm.astro';
+import OpeningHours from '../components/OpeningHours.astro';
+import MapEmbed from '../components/MapEmbed.astro';
+import Icon from '../components/Icon.astro';
+import FacebookIcon from '../components/FacebookIcon.astro';
+import { Phone, MapPin, Navigation, ArrowUpRight } from '@lucide/astro';
+import { site, mapsLink } from '../data/site';
+
+const fields = [
+  { name: 'name', label: 'Name', type: 'text', required: true },
+  { name: 'email', label: 'Email', type: 'email', required: true },
+  { name: 'phone', label: 'Telephone', type: 'tel', required: true },
+  { name: 'subject', label: 'Subject', type: 'select', required: true, full: true, options: ['General Enquiry', 'Service', 'Bodywork', 'EV Conversion', 'MOT', 'Quote', 'Other'] },
+  { name: 'reg', label: 'Vehicle Registration', type: 'text', placeholder: 'e.g. AB12 CDE' },
+  { name: 'date', label: 'Preferred Date', type: 'date' },
+  { name: 'time', label: 'Preferred Time', type: 'select', options: ['Morning (AM)', 'Afternoon (PM)'] },
+  { name: 'enquiry', label: 'Your enquiry', type: 'textarea', required: true, placeholder: 'Tell us about your VW and how we can help…' },
+] as const;
+
+const methods = [
+  { icon: 'Phone', label: 'Call the workshop', value: site.phone.display, href: site.phone.href, note: 'Mon-Fri 8am-6pm' },
+  { icon: 'facebook', label: 'Message on Facebook', value: '@JacksGarageW10', href: site.facebook, note: 'We reply between jobs', external: true },
+  { icon: 'MapPin', label: 'Visit us', value: 'Ladbroke Grove, W10', href: mapsLink, note: site.address.line1, external: true },
+];
+---
+<Layout
+  title="Contact Jack's Garage in London - 020 7243 8926 | Classic VW Specialists W10"
+  description="Contact Jack's Garage, Classic VW specialists in Ladbroke Grove, London W10. Call 020 7243 8926, message us on Facebook, or send an enquiry. Mon-Fri 8am-6pm."
+  path="/contact-us"
+>
+  <!-- Hero -->
+  <section class="relative overflow-hidden bg-white pt-32 md:pt-40">
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 bg-grid-faint opacity-60 [background-size:46px_46px]"></div>
+    <div aria-hidden="true" class="pointer-events-none absolute -right-24 -top-24 h-[30rem] w-[30rem] rounded-full bg-brand-500/10 blur-3xl"></div>
+    <div class="container-jg relative pb-12 md:pb-16">
+      <nav aria-label="Breadcrumb" class="reveal mb-6 flex items-center gap-2 text-sm text-muted">
+        <a href="/" class="transition-colors hover:text-brand-700">Home</a><span class="text-line">/</span><span class="text-ink">Contact Us</span>
+      </nav>
+      <div class="max-w-3xl">
+        <span class="eyebrow reveal">Contact us</span>
+        <h1 class="reveal mt-4 text-d2 text-ink" style="--reveal-delay:60ms">Give Jack's Garage a call - <span class="script-accent text-brand-600">we're happy to help</span></h1>
+        <p class="reveal mt-5 text-body-xl leading-relaxed text-muted" style="--reveal-delay:120ms">Whether it's a quick question, a quote or booking your VW in, the quickest way to reach us is a phone call. Prefer to write? Send us an enquiry below.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact methods -->
+  <section class="pb-4">
+    <div class="container-jg grid gap-5 sm:grid-cols-3">
+      {methods.map((m, i) => (
+        <a href={m.href} target={m.external ? '_blank' : undefined} rel={m.external ? 'noopener' : undefined} class="group reveal flex flex-col rounded-3xl border border-line bg-white p-6 shadow-card transition-all duration-300 hover:-translate-y-1 hover:border-brand-300 hover:shadow-card-hover" style={`--reveal-delay:${i * 80}ms`}>
+          <span class="icon-tile transition-colors duration-300 group-hover:bg-brand-500 group-hover:text-white">
+            {m.icon === 'facebook' ? <FacebookIcon size={22} /> : <Icon name={m.icon} size={24} />}
+          </span>
+          <p class="mt-5 text-sm font-medium text-muted">{m.label}</p>
+          <p class="mt-1 text-h3 font-bold text-ink">{m.value}</p>
+          <p class="mt-1 text-sm text-muted">{m.note}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Form + info -->
+  <section class="section">
+    <div class="container-jg grid gap-10 lg:grid-cols-[1.5fr_1fr]">
+      <div>
+        <h2 class="text-h2 font-bold text-ink">Send a general enquiry</h2>
+        <p class="mt-2 text-muted">Fill in the form and we'll point you in the right direction.</p>
+        <div class="mt-6">
+          <EnquiryForm formName="general-enquiry" fields={fields} submitLabel="Send enquiry" />
+        </div>
+      </div>
+      <div class="flex flex-col gap-5">
+        <div class="overflow-hidden rounded-3xl border border-line shadow-card">
+          <MapEmbed class="min-h-[260px]" />
+        </div>
+        <OpeningHours />
+        <a href={mapsLink} target="_blank" rel="noopener" class="group flex items-center gap-3 rounded-3xl border border-line bg-cream-200 p-5 transition-colors hover:border-brand-300">
+          <span class="icon-tile h-11 w-11"><MapPin size={20} /></span>
+          <span class="flex-1">
+            <span class="block text-[0.95rem] font-semibold text-ink">{site.address.line1}</span>
+            <span class="block text-sm text-muted">{site.address.city} {site.address.postcode}</span>
+          </span>
+          <Navigation size={18} class="text-brand-600" />
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

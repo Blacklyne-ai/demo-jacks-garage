@@ -1,0 +1,45 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHero from '../../components/PageHero.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { ArrowRight, Newspaper } from '@lucide/astro';
+import { press } from '../../data/press';
+---
+<Layout
+  title="In the Press - Jack's Garage | Featured in 6 Motoring Magazines"
+  description="Jack's Garage in the motoring press - featured in Hayburner, Classic & Sports Car, Volksworld, VW Camper & Commercial, Car & Accessory Trader and Autocar for our classic VW EV conversions."
+  path="/promotions"
+  image="/images/press/volksworld.png"
+>
+  <PageHero
+    eyebrow="In the Press"
+    title="Read articles in the motoring press that we've featured in"
+    subtitle="Our pioneering classic-VW electric conversions caught the eye of <strong>six motoring magazines</strong> in early 2020. Here's where to find Jack's Garage in print."
+    breadcrumbs={[{ label: 'Home', href: '/' }, { label: 'In the Press' }]}
+  >
+    <span class="chip"><Newspaper size={16} /> 6 features · early 2020</span>
+  </PageHero>
+
+  <section class="section">
+    <div class="container-jg">
+      <div class="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
+        {press.map((p, i) => (
+          <a href={`/promotions/${p.slug}`} class="service-card reveal group" style={`--reveal-delay:${(i % 3) * 90}ms`}>
+            <div class="relative aspect-[3/2] overflow-hidden bg-cream-300">
+              <img src={p.cover} alt={`${p.magazine}, ${p.edition}`} width="400" height="267" loading="lazy" class="service-card__img h-full w-full object-cover transition-transform duration-700" />
+              <span class="absolute left-4 top-4 inline-flex items-center rounded-pill bg-white/92 px-3 py-1 font-mono text-[0.68rem] font-semibold uppercase tracking-wide text-brand-700 backdrop-blur">{p.edition}</span>
+            </div>
+            <div class="flex flex-1 flex-col p-6">
+              <span class="text-xs font-semibold uppercase tracking-wide text-brand-700">{p.topic}</span>
+              <h2 class="mt-1.5 text-h3 font-bold text-ink">{p.magazine}</h2>
+              <p class="mt-2 line-clamp-3 flex-1 text-[0.9rem] leading-relaxed text-muted">{p.excerpt}</p>
+              <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700">Read the feature <ArrowRight size={15} class="arrow" /></span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand title="Want to be our next conversion story?" subtitle="The magazines came for the EV conversions - and they're still our proudest work. Talk to us about converting your classic VW." />
+</Layout>
